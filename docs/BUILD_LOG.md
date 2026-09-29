@@ -12,16 +12,27 @@
 
 - Added deterministic 100-product JSON fixture, demo seed endpoint, browser-side Shopify CSV mapper and basic product import view.
 - Added Shopify authorization-code install/callback routes with Owner authorization, state cookie, timestamp/HMAC validation, minimal read-only scope, code exchange and AES-GCM encrypted storage.
-- Status: demo fixture and basic CSV import work; interactive column mapping, durable product persistence and paginated GraphQL import remain open. Invalid CSV rows trigger a downloadable error report. No Shopify credentials were available for live verification.
-- Verification: fixture count and seeded rule coverage are asserted by Vitest.
-- Commit: included in the consolidated implementation commit; phase remains partial.
+- Status: demo fixture and basic CSV import work; authenticated durable demo-product persistence now exists. Interactive column mapping, CSV persistence and paginated Shopify GraphQL import remain open. Invalid CSV rows trigger a downloadable error report. No Shopify credentials were available for live verification.
+- Implementation continuation: added authenticated persistence for the deterministic Demo Store, content-hash idempotent product upserts, image persistence, and resumable ten-product import batches backed by job leases, cursor/progress checkpoints, and per-item outcomes. A saved-product GET path feeds the workspace after import.
+- Verification: batch-window and normalized demo-row mapping tests added. This environment has no Supabase CLI or Docker, so SQL/RLS behavior has not been exercised against a live Postgres instance; do not treat database integration as complete.
+- Verification: fixture count and seeded rule coverage are asserted by Vitest; database behavior still needs a configured Supabase integration run.
+- Commit: this continuation is committed separately; phase remains partial.
 
 ## Phase 2 — Audit Engine (partial)
 
 - Added pure TypeScript SEO, image, content, catalog data, category-attribute, JSON-LD and collection/link-candidate checks; exact/near duplicate detection; transparent score functions; dashboard findings/history views.
-- Status: the 19 Section 5.1 rule IDs are represented, but external same-domain broken-link checks and detailed category/metafield/structured-data checks need completion. Audits currently execute in the demo client rather than resumable DB-backed batches.
+- Status: rules are only partially aligned with Section 5.1; exact per-rule behavior/tests and safe link checking need completion. Audits still execute in the demo client; persisted audit batches remain open.
+- Implementation continuation: added durable job lease/cursor/checkpoint infrastructure, currently wired to Demo Store import only. Resumable audit execution and persisted audit/issues remain open and are next in sequence.
 - Verification: core deterministic tests pass on the synthetic fixture; independent no-false-positive clean-product suite and AC-02 coverage remain open.
 - Commit: included in the consolidated implementation commit; phase remains partial.
+
+## Continuation 1 — Database persistence and resumable jobs (partial)
+
+- Added migration `202609300002_persisted_jobs.sql` with persisted job leases, cursor/progress counters, idempotent item outcomes, protected claim/checkpoint functions, Demo Store uniqueness, product vendor storage, and stable audit-issue fingerprints.
+- Added authenticated Demo Store persistence and ten-product resumable import batches. Import updates are skipped when the normalized description content hash is unchanged.
+- Verification: `npm run format`, `npm run lint`, `npm run typecheck`, `npm run test` (15 tests), and `npm run build` pass. No local Postgres/Supabase runner is installed, so the migration and RLS functions still need execution/integration validation against Supabase.
+- Remaining: persist/execute audit, AI, Shopify import and publish jobs; per-item retry route; real CSV persistence; live DB integration tests.
+- Commit: committed as a separate continuation change.
 
 ## Phase 3 — AI Copilot (partial)
 

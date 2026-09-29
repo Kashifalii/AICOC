@@ -113,13 +113,47 @@ export function Dashboard() {
     setBusy(true);
     setMessage("");
     try {
+      const savedImportKey = sessionStorage.getItem("aicoc-demo-import-key") ?? crypto.randomUUID();
+      sessionStorage.setItem("aicoc-demo-import-key", savedImportKey);
       const response = await fetch("/api/demo/seed", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: "{}",
+        body: JSON.stringify({ idempotencyKey: savedImportKey }),
       });
-      if (!response.ok) throw new Error("Demo store could not be loaded");
-      const result = (await response.json()) as { products: ProductRecord[] };
+      const seedResult = (await response.json()) as {
+        job?: { id: string; status: string; progress?: { completed?: number; failed?: number } };
+        error?: { message?: string };
+      };
+      if (!response.ok || !seedResult.job)
+        throw new Error(seedResult.error?.message ?? "Could not start saved Demo Store import");
+      let job = seedResult.job;
+      let attempts = 0;
+      while (job.status !== "completed" && attempts < 20) {
+        const batchResponse = await fetch(`/api/jobs/${job.id}/run-batch`, { method: "POST" });
+        const batchResult = (await batchResponse.json()) as {
+          job?: { id: string; status: string; progress?: { completed?: number; failed?: number } };
+          busy?: boolean;
+          error?: { message?: string };
+        };
+        if (!batchResponse.ok && batchResponse.status !== 202)
+          throw new Error(batchResult.error?.message ?? "Demo Store import batch failed");
+        if (batchResult.job) job = batchResult.job;
+        attempts += 1;
+        setMessage(`Saving Demo Store Â· ${job.progress?.completed ?? 0} / 100 products`);
+        if (batchResult.busy) await new Promise((resolve) => window.setTimeout(resolve, 700));
+      }
+      if (job.status !== "completed")
+        throw new Error(
+          "Demo Store import is still running. Select Load Demo Store again to resume it.",
+        );
+      sessionStorage.removeItem("aicoc-demo-import-key");
+      const productsResponse = await fetch("/api/demo/seed", { method: "GET" });
+      const result = (await productsResponse.json()) as {
+        products?: ProductRecord[];
+        error?: { message?: string };
+      };
+      if (!productsResponse.ok || !result.products)
+        throw new Error(result.error?.message ?? "Could not read saved Demo Store products");
       setProducts(result.products);
       setIssues([]);
       setHasAudit(false);
@@ -127,9 +161,13 @@ export function Dashboard() {
       setScoreBefore(null);
       setApproved([]);
       setApprovedValues({});
-      setMessage("Demo Store loaded Â· 100 products ready to audit");
-    } catch {
-      setMessage("Demo Store is ready locally. Run an audit to view the results.");
+      setMessage(
+        `Demo Store loaded Â· ${result.products.length} products ready to audit${job.progress?.failed ? ` Â· ${job.progress.failed} item failures` : ""}`,
+      );
+    } catch (error) {
+      setMessage(
+        `${error instanceof Error ? error.message : "Saved import unavailable"}. Using the local demo fixture.`,
+      );
       setProducts(originalProducts);
     } finally {
       setBusy(false);
