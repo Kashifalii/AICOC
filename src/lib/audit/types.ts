@@ -1,0 +1,30 @@
+export type Severity = "critical" | "high" | "medium" | "low";
+export type Product = {
+  id: string;
+  title: string;
+  description: string;
+  vendor: string;
+  productType: string;
+  handle: string;
+  seoTitle: string;
+  seoDescription: string;
+  price: number;
+  sku: string;
+  tags: string[];
+  images: { url: string; alt: string }[];
+  collections: string[];
+  attributes: Record<string, string>;
+  gtin?: string;
+};
+export type AuditIssue = {
+  id: string;
+  ruleId: string;
+  category: string;
+  severity: Severity;
+  productId: string;
+  productTitle: string;
+  field: string;
+  evidence: string;
+  impact: number;
+  currentValue: string;
+};

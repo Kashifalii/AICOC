@@ -1,0 +1,2471 @@
+[
+  {
+    "id": "demo-001",
+    "title": "Sage Apparel Essential 001",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "sage-apparel-001",
+    "seoTitle": "Sage Apparel Essential 001 for Everyday Style",
+    "seoDescription": "",
+    "price": 18.99,
+    "sku": "NS-0001",
+    "tags": ["apparel", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-001.jpg",
+        "alt": "Sage apparel essential"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Sage",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-002",
+    "title": "Sand Home Essential 002",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "sand-home-002",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 19.76,
+    "sku": "NS-0002",
+    "tags": ["home", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-002.jpg",
+        "alt": "Sand home essential"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-003",
+    "title": "Indigo Accessories Essential 003",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "indigo-accessories-003",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 20.53,
+    "sku": "NS-0003",
+    "tags": ["accessories", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-003.jpg",
+        "alt": "Indigo accessories essential"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Indigo",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-004",
+    "title": "Rose Beauty Essential 004",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "rose-beauty-004",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 21.3,
+    "sku": "NS-0004",
+    "tags": ["beauty", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-004.jpg",
+        "alt": "Rose beauty essential"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-005",
+    "title": "Charcoal Apparel Essential 005",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "charcoal-apparel-005",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 22.07,
+    "sku": "NS-0005",
+    "tags": ["apparel", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-005.jpg",
+        "alt": "Charcoal apparel essential"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Charcoal",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-006",
+    "title": "Sage Home Essential 006",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "sage-home-006",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 22.84,
+    "sku": "NS-0006",
+    "tags": ["home", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-006.jpg",
+        "alt": "Sage home essential"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-007",
+    "title": "Sand Accessories Essential 007",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "sand-accessories-007",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 23.61,
+    "sku": "NS-0007",
+    "tags": ["accessories", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-007.jpg",
+        "alt": "Sand accessories essential"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Sand",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-008",
+    "title": "Indigo Beauty Essential 008",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "indigo-beauty-008",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 24.38,
+    "sku": "NS-0008",
+    "tags": ["beauty", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-008.jpg",
+        "alt": "Indigo beauty essential"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-009",
+    "title": "Rose Apparel Essential 009",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "rose-apparel-009",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 25.15,
+    "sku": "NS-0009",
+    "tags": ["apparel", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-009.jpg",
+        "alt": "Rose apparel essential"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Rose",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-010",
+    "title": "Charcoal Home Essential 010",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "charcoal-home-010",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 25.92,
+    "sku": "NS-0010",
+    "tags": ["home", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-010.jpg",
+        "alt": "Charcoal home essential"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-011",
+    "title": "Sage Accessories Essential 011",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "sage-accessories-011",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 26.69,
+    "sku": "NS-0011",
+    "tags": ["accessories", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-011.jpg",
+        "alt": "Sage accessories essential"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Sage",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-012",
+    "title": "Sand Beauty Essential 012",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "sand-beauty-012",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 27.46,
+    "sku": "NS-0012",
+    "tags": ["beauty", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-012.jpg",
+        "alt": "Sand beauty essential"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-013",
+    "title": "Indigo Apparel Essential 013",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "indigo-apparel-013",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 28.23,
+    "sku": "NS-0013",
+    "tags": ["apparel", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-013.jpg",
+        "alt": "Indigo apparel essential"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Indigo",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-014",
+    "title": "Rose Home Essential 014",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "rose-home-014",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 29.0,
+    "sku": "NS-0014",
+    "tags": ["home", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-014.jpg",
+        "alt": "Rose home essential"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-015",
+    "title": "Charcoal Accessories Essential 015",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "charcoal-accessories-015",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 29.77,
+    "sku": "NS-0015",
+    "tags": ["accessories", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-015.jpg",
+        "alt": "Charcoal accessories essential"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Charcoal",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-016",
+    "title": "Sage Beauty Essential 016",
+    "description": "An identical artisan-crafted product description shared by this collection. Designed with thoughtful detail, dependable quality, and enduring everyday comfort for a simple and versatile look.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "sage-beauty-016",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 30.54,
+    "sku": "NS-0016",
+    "tags": ["beauty", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-016.jpg",
+        "alt": "Sage beauty essential"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-017",
+    "title": "Sand Apparel Essential 017",
+    "description": "Comfortable everyday essential in a sand finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "sand-apparel-017",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 31.31,
+    "sku": "NS-0017",
+    "tags": ["apparel", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-017.jpg",
+        "alt": "Sand apparel essential"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Sand",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-018",
+    "title": "Indigo Home Essential 018",
+    "description": "Comfortable everyday essential in a indigo finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "indigo-home-018",
+    "seoTitle": "",
+    "seoDescription": "",
+    "price": 32.08,
+    "sku": "NS-0018",
+    "tags": ["home", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-018.jpg",
+        "alt": "Indigo home essential"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-019",
+    "title": "Rose Accessories Essential 019",
+    "description": "Comfortable everyday essential in a rose finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "rose-accessories-019",
+    "seoTitle": "Rose Accessories Essential 019 for Everyday Style",
+    "seoDescription": "Rose Accessories Essential 019 by Northstar Goods. Discover quality and comfort.",
+    "price": 32.85,
+    "sku": "NS-0019",
+    "tags": ["accessories", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-019.jpg",
+        "alt": "Rose accessories essential"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Rose",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-020",
+    "title": "Charcoal Beauty Essential 020",
+    "description": "Comfortable everyday essential in a charcoal finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "charcoal-beauty-020",
+    "seoTitle": "Charcoal Beauty Essential 020 for Everyday Style",
+    "seoDescription": "Charcoal Beauty Essential 020 by Northstar Goods. Discover quality and comfort.",
+    "price": 33.62,
+    "sku": "NS-0020",
+    "tags": ["beauty", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-020.jpg",
+        "alt": "Charcoal beauty essential"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-021",
+    "title": "SAGE APPAREL 21",
+    "description": "Comfortable everyday essential in a sage finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "sage-apparel-021",
+    "seoTitle": "SAGE APPAREL 21",
+    "seoDescription": "SAGE APPAREL 21 by Northstar Goods. Discover quality and comfort.",
+    "price": 34.39,
+    "sku": "NS-0021",
+    "tags": ["apparel", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-021.jpg",
+        "alt": "Sage apparel essential"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Sage",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-022",
+    "title": "SAND HOME 22",
+    "description": "Comfortable everyday essential in a sand finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "sand-home-022",
+    "seoTitle": "SAND HOME 22",
+    "seoDescription": "SAND HOME 22 by Northstar Goods. Discover quality and comfort.",
+    "price": 35.16,
+    "sku": "NS-0022",
+    "tags": ["home", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-022.jpg",
+        "alt": "Sand home essential"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-023",
+    "title": "INDIGO ACCESSORIES 23",
+    "description": "Comfortable everyday essential in a indigo finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "indigo-accessories-023",
+    "seoTitle": "INDIGO ACCESSORIES 23",
+    "seoDescription": "INDIGO ACCESSORIES 23 by Northstar Goods. Discover quality and comfort.",
+    "price": 35.93,
+    "sku": "NS-0023",
+    "tags": ["accessories", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-023.jpg",
+        "alt": "Indigo accessories essential"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Indigo",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-024",
+    "title": "ROSE BEAUTY 24",
+    "description": "Comfortable everyday essential in a rose finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "rose-beauty-024",
+    "seoTitle": "ROSE BEAUTY 24",
+    "seoDescription": "ROSE BEAUTY 24 by Northstar Goods. Discover quality and comfort.",
+    "price": 36.7,
+    "sku": "NS-0024",
+    "tags": ["beauty", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-024.jpg",
+        "alt": "Rose beauty essential"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-025",
+    "title": "CHARCOAL APPAREL 25",
+    "description": "Comfortable everyday essential in a charcoal finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "charcoal-apparel-025",
+    "seoTitle": "CHARCOAL APPAREL 25",
+    "seoDescription": "CHARCOAL APPAREL 25 by Northstar Goods. Discover quality and comfort.",
+    "price": 37.47,
+    "sku": "NS-0025",
+    "tags": ["apparel", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-025.jpg",
+        "alt": "Charcoal apparel essential"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Charcoal",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-026",
+    "title": "SAGE HOME 26",
+    "description": "Comfortable everyday essential in a sage finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "sage-home-026",
+    "seoTitle": "SAGE HOME 26",
+    "seoDescription": "SAGE HOME 26 by Northstar Goods. Discover quality and comfort.",
+    "price": 38.24,
+    "sku": "NS-0026",
+    "tags": ["home", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-026.jpg",
+        "alt": "Sage home essential"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-027",
+    "title": "SAND ACCESSORIES 27",
+    "description": "Comfortable everyday essential in a sand finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "sand-accessories-027",
+    "seoTitle": "SAND ACCESSORIES 27",
+    "seoDescription": "SAND ACCESSORIES 27 by Northstar Goods. Discover quality and comfort.",
+    "price": 39.01,
+    "sku": "NS-0027",
+    "tags": ["accessories", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-027.jpg",
+        "alt": "Sand accessories essential"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Sand",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-028",
+    "title": "INDIGO BEAUTY 28",
+    "description": "Comfortable everyday essential in a indigo finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "indigo-beauty-028",
+    "seoTitle": "INDIGO BEAUTY 28",
+    "seoDescription": "INDIGO BEAUTY 28 by Northstar Goods. Discover quality and comfort.",
+    "price": 39.78,
+    "sku": "NS-0028",
+    "tags": ["beauty", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-028.jpg",
+        "alt": "Indigo beauty essential"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-029",
+    "title": "ROSE APPAREL 29",
+    "description": "Comfortable everyday essential in a rose finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "rose-apparel-029",
+    "seoTitle": "ROSE APPAREL 29",
+    "seoDescription": "ROSE APPAREL 29 by Northstar Goods. Discover quality and comfort.",
+    "price": 40.55,
+    "sku": "NS-0029",
+    "tags": ["apparel", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-029.jpg",
+        "alt": "Rose apparel essential"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Rose",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-030",
+    "title": "CHARCOAL HOME 30",
+    "description": "Comfortable everyday essential in a charcoal finish. Thoughtful details make this piece easy to style and care for through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "charcoal-home-030",
+    "seoTitle": "CHARCOAL HOME 30",
+    "seoDescription": "CHARCOAL HOME 30 by Northstar Goods. Discover quality and comfort.",
+    "price": 41.32,
+    "sku": "NS-0030",
+    "tags": ["home", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-030.jpg",
+        "alt": "Charcoal home essential"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-031",
+    "title": "SAGE ACCESSORIES 31",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 031.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "sage-accessories-031",
+    "seoTitle": "SAGE ACCESSORIES 31",
+    "seoDescription": "SAGE ACCESSORIES 31 by Northstar Goods. Discover quality and comfort.",
+    "price": 42.09,
+    "sku": "NS-0031",
+    "tags": ["accessories", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-031.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Sage",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-032",
+    "title": "SAND BEAUTY 32",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 032.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "sand-beauty-032",
+    "seoTitle": "SAND BEAUTY 32",
+    "seoDescription": "SAND BEAUTY 32 by Northstar Goods. Discover quality and comfort.",
+    "price": 42.86,
+    "sku": "NS-0032",
+    "tags": ["beauty", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-032.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-033",
+    "title": "INDIGO APPAREL 33",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 033.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "indigo-apparel-033",
+    "seoTitle": "INDIGO APPAREL 33",
+    "seoDescription": "INDIGO APPAREL 33 by Northstar Goods. Discover quality and comfort.",
+    "price": 43.63,
+    "sku": "NS-0033",
+    "tags": ["apparel", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-033.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Indigo",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-034",
+    "title": "ROSE HOME 34",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the rose home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 034.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "rose-home-034",
+    "seoTitle": "ROSE HOME 34",
+    "seoDescription": "ROSE HOME 34 by Northstar Goods. Discover quality and comfort.",
+    "price": 44.4,
+    "sku": "NS-0034",
+    "tags": ["home", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-034.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-035",
+    "title": "CHARCOAL ACCESSORIES 35",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the charcoal accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 035.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "charcoal-accessories-035",
+    "seoTitle": "CHARCOAL ACCESSORIES 35",
+    "seoDescription": "CHARCOAL ACCESSORIES 35 by Northstar Goods. Discover quality and comfort.",
+    "price": 45.17,
+    "sku": "NS-0035",
+    "tags": ["accessories", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-035.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Charcoal",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-036",
+    "title": "SAGE BEAUTY 36",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 036.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "sage-beauty-036",
+    "seoTitle": "SAGE BEAUTY 36",
+    "seoDescription": "Discover the sage beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 45.94,
+    "sku": "NS-0036",
+    "tags": ["beauty", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-036.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-037",
+    "title": "SAND APPAREL 37",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 037.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "sand-apparel-037",
+    "seoTitle": "SAND APPAREL 37",
+    "seoDescription": "Discover the sand apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 46.71,
+    "sku": "NS-0037",
+    "tags": ["apparel", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-037.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Sand",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-038",
+    "title": "INDIGO HOME 38",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 038.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "indigo-home-038",
+    "seoTitle": "INDIGO HOME 38",
+    "seoDescription": "Discover the indigo home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 47.48,
+    "sku": "NS-0038",
+    "tags": ["home", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-038.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-039",
+    "title": "ROSE ACCESSORIES 39",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the rose accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 039.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "rose-accessories-039",
+    "seoTitle": "ROSE ACCESSORIES 39",
+    "seoDescription": "Discover the rose accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 48.25,
+    "sku": "NS-0039",
+    "tags": ["accessories", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-039.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Rose",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-040",
+    "title": "CHARCOAL BEAUTY 40",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the charcoal beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 040.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "charcoal-beauty-040",
+    "seoTitle": "CHARCOAL BEAUTY 40",
+    "seoDescription": "Discover the charcoal beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 49.02,
+    "sku": "NS-0040",
+    "tags": ["beauty", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-040.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-041",
+    "title": "SAGE APPAREL 41",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 041.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "sage-apparel-041",
+    "seoTitle": "SAGE APPAREL 41",
+    "seoDescription": "Discover the sage apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 49.79,
+    "sku": "NS-0041",
+    "tags": ["apparel", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-041.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Sage",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-042",
+    "title": "SAND HOME 42",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 042.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "sand-home-042",
+    "seoTitle": "SAND HOME 42",
+    "seoDescription": "Discover the sand home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 50.56,
+    "sku": "NS-0042",
+    "tags": ["home", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-042.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-043",
+    "title": "INDIGO ACCESSORIES 43",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 043.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "indigo-accessories-043",
+    "seoTitle": "INDIGO ACCESSORIES 43",
+    "seoDescription": "Discover the indigo accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 51.33,
+    "sku": "NS-0043",
+    "tags": ["accessories", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-043.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Indigo",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-044",
+    "title": "ROSE BEAUTY 44",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the rose beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 044.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "rose-beauty-044",
+    "seoTitle": "ROSE BEAUTY 44",
+    "seoDescription": "Discover the rose beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 52.1,
+    "sku": "NS-0044",
+    "tags": ["beauty", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-044.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-045",
+    "title": "CHARCOAL APPAREL 45",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the charcoal apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 045.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "charcoal-apparel-045",
+    "seoTitle": "CHARCOAL APPAREL 45",
+    "seoDescription": "Discover the charcoal apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 52.87,
+    "sku": "NS-0045",
+    "tags": ["apparel", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-045.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Charcoal",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-046",
+    "title": "SAGE HOME 46",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 046.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "sage-home-046",
+    "seoTitle": "SAGE HOME 46",
+    "seoDescription": "Discover the sage home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 53.64,
+    "sku": "NS-0046",
+    "tags": ["home", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-046.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-047",
+    "title": "SAND ACCESSORIES 47",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 047.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "sand-accessories-047",
+    "seoTitle": "SAND ACCESSORIES 47",
+    "seoDescription": "Discover the sand accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 54.41,
+    "sku": "NS-0047",
+    "tags": ["accessories", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-047.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Sand",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-048",
+    "title": "INDIGO BEAUTY 48",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 048.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "indigo-beauty-048",
+    "seoTitle": "INDIGO BEAUTY 48",
+    "seoDescription": "Discover the indigo beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 55.18,
+    "sku": "NS-0048",
+    "tags": ["beauty", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-048.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-049",
+    "title": "ROSE APPAREL 49",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the rose apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 049.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "rose-apparel-049",
+    "seoTitle": "ROSE APPAREL 49",
+    "seoDescription": "Discover the rose apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 55.95,
+    "sku": "NS-0049",
+    "tags": ["apparel", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-049.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Rose",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-050",
+    "title": "CHARCOAL HOME 50",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the charcoal home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 050.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "charcoal-home-050",
+    "seoTitle": "CHARCOAL HOME 50",
+    "seoDescription": "Discover the charcoal home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 56.72,
+    "sku": "NS-0050",
+    "tags": ["home", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-050.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-051",
+    "title": "Sage Accessories Essential 051",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 051.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "sage-accessories-051",
+    "seoTitle": "Northstar bestselling everyday cotton collection title",
+    "seoDescription": "Discover the sage accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 57.49,
+    "sku": "NS-0051",
+    "tags": ["accessories", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-051.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-052",
+    "title": "Sand Beauty Essential 052",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 052.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "sand-beauty-052",
+    "seoTitle": "Northstar bestselling everyday cotton collection title",
+    "seoDescription": "Discover the sand beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 58.26,
+    "sku": "NS-0052",
+    "tags": ["beauty", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-052.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-053",
+    "title": "Indigo Apparel Essential 053",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 053.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "indigo-apparel-053",
+    "seoTitle": "Indigo Apparel Essential 053 | Northstar Goods",
+    "seoDescription": "Discover the indigo apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 59.03,
+    "sku": "NS-0053",
+    "tags": ["apparel", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-053.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-054",
+    "title": "Rose Home Essential 054",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the rose home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 054.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "rose-home-054",
+    "seoTitle": "Rose Home Essential 054 | Northstar Goods",
+    "seoDescription": "Discover the rose home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 59.8,
+    "sku": "NS-0054",
+    "tags": ["home", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-054.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-055",
+    "title": "Charcoal Accessories Essential 055",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the charcoal accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 055.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "charcoal-accessories-055",
+    "seoTitle": "Charcoal Accessories Essential 055 | Northstar Goods",
+    "seoDescription": "Discover the charcoal accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 60.57,
+    "sku": "NS-0055",
+    "tags": ["accessories", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-055.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-056",
+    "title": "Sage Beauty Essential 056",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 056.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "sage-beauty-056",
+    "seoTitle": "Sage Beauty Essential 056 | Northstar Goods",
+    "seoDescription": "Discover the sage beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 61.34,
+    "sku": "NS-0056",
+    "tags": ["beauty", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-056.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-057",
+    "title": "Sand Apparel Essential 057",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 057.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "sand-apparel-057",
+    "seoTitle": "Sand Apparel Essential 057 | Northstar Goods",
+    "seoDescription": "Discover the sand apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 62.11,
+    "sku": "NS-0057",
+    "tags": ["apparel", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-057.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-058",
+    "title": "Indigo Home Essential 058",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 058.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "indigo-home-058",
+    "seoTitle": "Indigo Home Essential 058 | Northstar Goods",
+    "seoDescription": "Discover the indigo home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 62.88,
+    "sku": "NS-0058",
+    "tags": ["home", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-058.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-059",
+    "title": "Rose Accessories Essential 059",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the rose accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 059.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "rose-accessories-059",
+    "seoTitle": "Rose Accessories Essential 059 | Northstar Goods",
+    "seoDescription": "Discover the rose accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 63.65,
+    "sku": "NS-0059",
+    "tags": ["accessories", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-059.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-060",
+    "title": "Charcoal Beauty Essential 060",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the charcoal beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 060.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "charcoal-beauty-060",
+    "seoTitle": "Charcoal Beauty Essential 060 | Northstar Goods",
+    "seoDescription": "Discover the charcoal beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 64.42,
+    "sku": "NS-0060",
+    "tags": ["beauty", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-060.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-061",
+    "title": "Sage Apparel Essential 061",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 061.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "sage-apparel-061",
+    "seoTitle": "Sage Apparel Essential 061 | Northstar Goods",
+    "seoDescription": "Discover the sage apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 65.19,
+    "sku": "NS-0061",
+    "tags": ["apparel", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-061.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-062",
+    "title": "Sand Home Essential 062",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 062.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "sand-home-062",
+    "seoTitle": "Sand Home Essential 062 | Northstar Goods",
+    "seoDescription": "Discover the sand home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 65.96,
+    "sku": "NS-0062",
+    "tags": ["home", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-062.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-063",
+    "title": "Indigo Accessories Essential 063",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 063.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "indigo-accessories-063",
+    "seoTitle": "Indigo Accessories Essential 063 | Northstar Goods",
+    "seoDescription": "Discover the indigo accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 66.73,
+    "sku": "NS-0063",
+    "tags": ["accessories", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-063.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-064",
+    "title": "Rose Beauty Essential 064",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the rose beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 064.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "rose-beauty-064",
+    "seoTitle": "Rose Beauty Essential 064 | Northstar Goods",
+    "seoDescription": "Discover the rose beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 67.5,
+    "sku": "NS-0064",
+    "tags": ["beauty", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-064.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-065",
+    "title": "Charcoal Apparel Essential 065",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the charcoal apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 065.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "charcoal-apparel-065",
+    "seoTitle": "Charcoal Apparel Essential 065 | Northstar Goods",
+    "seoDescription": "Discover the charcoal apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 68.27,
+    "sku": "NS-0065",
+    "tags": ["apparel", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-065.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-066",
+    "title": "Sage Home Essential 066",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 066.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "sage-home-066",
+    "seoTitle": "Sage Home Essential 066 | Northstar Goods",
+    "seoDescription": "Discover the sage home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 69.04,
+    "sku": "NS-0066",
+    "tags": ["home", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-066.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-067",
+    "title": "Sand Accessories Essential 067",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 067.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "sand-accessories-067",
+    "seoTitle": "Sand Accessories Essential 067 | Northstar Goods",
+    "seoDescription": "Discover the sand accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 69.81,
+    "sku": "NS-0067",
+    "tags": ["accessories", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-067.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-068",
+    "title": "Indigo Beauty Essential 068",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 068.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "indigo-beauty-068",
+    "seoTitle": "Indigo Beauty Essential 068 | Northstar Goods",
+    "seoDescription": "Discover the indigo beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 70.58,
+    "sku": "NS-0068",
+    "tags": ["beauty", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-068.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-069",
+    "title": "Rose Apparel Essential 069",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the rose apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 069.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "rose-apparel-069",
+    "seoTitle": "Rose Apparel Essential 069 | Northstar Goods",
+    "seoDescription": "Discover the rose apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 71.35,
+    "sku": "NS-0069",
+    "tags": ["apparel", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-069.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-070",
+    "title": "Charcoal Home Essential 070",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the charcoal home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 070.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "charcoal-home-070",
+    "seoTitle": "Charcoal Home Essential 070 | Northstar Goods",
+    "seoDescription": "Discover the charcoal home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 72.12,
+    "sku": "NS-0070",
+    "tags": ["home", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-070.jpg",
+        "alt": ""
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-071",
+    "title": "Sage Accessories Essential 071",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 071.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "sage-accessories-071",
+    "seoTitle": "Sage Accessories Essential 071 | Northstar Goods",
+    "seoDescription": "Discover the sage accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 72.89,
+    "sku": "NS-0071",
+    "tags": ["accessories", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-071.jpg",
+        "alt": "product-071.jpg"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-072",
+    "title": "Sand Beauty Essential 072",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 072.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "sand-beauty-072",
+    "seoTitle": "Sand Beauty Essential 072 | Northstar Goods",
+    "seoDescription": "Discover the sand beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 73.66,
+    "sku": "NS-0072",
+    "tags": ["beauty", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-072.jpg",
+        "alt": "product-072.jpg"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-073",
+    "title": "Indigo Apparel Essential 073",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 073.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "indigo-apparel-073",
+    "seoTitle": "Indigo Apparel Essential 073 | Northstar Goods",
+    "seoDescription": "Discover the indigo apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 74.43,
+    "sku": "NS-0073",
+    "tags": ["apparel", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-073.jpg",
+        "alt": "product-073.jpg"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-074",
+    "title": "Rose Home Essential 074",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the rose home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 074.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "rose-home-074",
+    "seoTitle": "Rose Home Essential 074 | Northstar Goods",
+    "seoDescription": "Discover the rose home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 75.2,
+    "sku": "NS-0074",
+    "tags": ["home", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-074.jpg",
+        "alt": "product-074.jpg"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-075",
+    "title": "Charcoal Accessories Essential 075",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the charcoal accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 075.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "charcoal-accessories-075",
+    "seoTitle": "Charcoal Accessories Essential 075 | Northstar Goods",
+    "seoDescription": "Discover the charcoal accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 75.97,
+    "sku": "NS-0075",
+    "tags": ["accessories", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-075.jpg",
+        "alt": "product-075.jpg"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-076",
+    "title": "Sage Beauty Essential 076",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 076.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "sage-beauty-076",
+    "seoTitle": "Sage Beauty Essential 076 | Northstar Goods",
+    "seoDescription": "Discover the sage beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 76.74,
+    "sku": "NS-0076",
+    "tags": ["beauty", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-076.jpg",
+        "alt": "product-076.jpg"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-077",
+    "title": "Sand Apparel Essential 077",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 077.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "sand-apparel-077",
+    "seoTitle": "Sand Apparel Essential 077 | Northstar Goods",
+    "seoDescription": "Discover the sand apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 77.51,
+    "sku": "NS-0077",
+    "tags": ["apparel", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-077.jpg",
+        "alt": "product-077.jpg"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Sand",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-078",
+    "title": "Indigo Home Essential 078",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 078.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "indigo-home-078",
+    "seoTitle": "Indigo Home Essential 078 | Northstar Goods",
+    "seoDescription": "Discover the indigo home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 78.28,
+    "sku": "NS-0078",
+    "tags": ["home", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-078.jpg",
+        "alt": "product-078.jpg"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-079",
+    "title": "Rose Accessories Essential 079",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the rose accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 079.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "rose-accessories-079",
+    "seoTitle": "Rose Accessories Essential 079 | Northstar Goods",
+    "seoDescription": "Discover the rose accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 79.05,
+    "sku": "NS-0079",
+    "tags": ["accessories", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-079.jpg",
+        "alt": "product-079.jpg"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Rose",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-080",
+    "title": "Charcoal Beauty Essential 080",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the charcoal beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 080.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "charcoal-beauty-080",
+    "seoTitle": "Charcoal Beauty Essential 080 | Northstar Goods",
+    "seoDescription": "Discover the charcoal beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 79.82,
+    "sku": "NS-0080",
+    "tags": ["beauty", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-080.jpg",
+        "alt": "product-080.jpg"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-081",
+    "title": "Sage Apparel Essential 081",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 081.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "sage-apparel-081",
+    "seoTitle": "Sage Apparel Essential 081 | Northstar Goods",
+    "seoDescription": "Discover the sage apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 0,
+    "sku": "NS-0081",
+    "tags": ["apparel", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-081.jpg",
+        "alt": "Sage apparel product, front view"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Sage",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": "1234567890123"
+  },
+  {
+    "id": "demo-082",
+    "title": "Sand Home Essential 082",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 082.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "sand-home-082",
+    "seoTitle": "Sand Home Essential 082 | Northstar Goods",
+    "seoDescription": "Discover the sand home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 0,
+    "sku": "NS-0082",
+    "tags": ["home", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-082.jpg",
+        "alt": "Sand home product, front view"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": "1234567890123"
+  },
+  {
+    "id": "demo-083",
+    "title": "Indigo Accessories Essential 083",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 083.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "indigo-accessories-083",
+    "seoTitle": "Indigo Accessories Essential 083 | Northstar Goods",
+    "seoDescription": "Discover the indigo accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 0,
+    "sku": "NS-0083",
+    "tags": ["accessories", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-083.jpg",
+        "alt": "Indigo accessories product, front view"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Indigo",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": "1234567890123"
+  },
+  {
+    "id": "demo-084",
+    "title": "Rose Beauty Essential 084",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the rose beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 084.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "rose-beauty-084",
+    "seoTitle": "Rose Beauty Essential 084 | Northstar Goods",
+    "seoDescription": "Discover the rose beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 0,
+    "sku": "NS-0084",
+    "tags": ["beauty", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-084.jpg",
+        "alt": "Rose beauty product, front view"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": "1234567890123"
+  },
+  {
+    "id": "demo-085",
+    "title": "Charcoal Apparel Essential 085",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the charcoal apparel easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 085.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "charcoal-apparel-085",
+    "seoTitle": "Charcoal Apparel Essential 085 | Northstar Goods",
+    "seoDescription": "Discover the charcoal apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 0,
+    "sku": "NS-0085",
+    "tags": ["apparel", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-085.jpg",
+        "alt": "Charcoal apparel product, front view"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Charcoal",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": "1234567890123"
+  },
+  {
+    "id": "demo-086",
+    "title": "Sage Home Essential 086",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sage home easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 086.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "sage-home-086",
+    "seoTitle": "Sage Home Essential 086 | Northstar Goods",
+    "seoDescription": "Discover the sage home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 0,
+    "sku": "NS-0086",
+    "tags": ["home", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-086.jpg",
+        "alt": "Sage home product, front view"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": "1234567890123"
+  },
+  {
+    "id": "demo-087",
+    "title": "Sand Accessories Essential 087",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the sand accessories easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 087.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "sand-accessories-087",
+    "seoTitle": "Sand Accessories Essential 087 | Northstar Goods",
+    "seoDescription": "Discover the sand accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 0,
+    "sku": "NS-0087",
+    "tags": ["accessories", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-087.jpg",
+        "alt": "Sand accessories product, front view"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Sand",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": "1234567890123"
+  },
+  {
+    "id": "demo-088",
+    "title": "Indigo Beauty Essential 088",
+    "description": "Everyday essential crafted for comfort and lasting use. Thoughtful details make the indigo beauty easy to style, care for, and enjoy through every season. Made with quality materials and a considered fit, it brings practical function and timeless appeal to your daily routine. Style 088.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "indigo-beauty-088",
+    "seoTitle": "Indigo Beauty Essential 088 | Northstar Goods",
+    "seoDescription": "Discover the indigo beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 0,
+    "sku": "NS-0088",
+    "tags": ["beauty", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-088.jpg",
+        "alt": "Indigo beauty product, front view"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": "1234567890123"
+  },
+  {
+    "id": "demo-089",
+    "title": "Rose Apparel Essential 089",
+    "description": "A versatile everyday essential with thoughtful details and quality construction.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "rose-apparel-089",
+    "seoTitle": "Rose Apparel Essential 089 | Northstar Goods",
+    "seoDescription": "Discover the rose apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 0,
+    "sku": "NS-0089",
+    "tags": ["apparel", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-089.jpg",
+        "alt": "Rose apparel product, front view"
+      }
+    ],
+    "collections": ["apparel"],
+    "attributes": {
+      "color": "Rose",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": "1234567890123"
+  },
+  {
+    "id": "demo-090",
+    "title": "Charcoal Home Essential 090",
+    "description": "<p>Short product description without a closing paragraph tag.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "charcoal-home-090",
+    "seoTitle": "Charcoal Home Essential 090 | Northstar Goods",
+    "seoDescription": "Discover the charcoal home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 0,
+    "sku": "NS-0090",
+    "tags": ["home", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-090.jpg",
+        "alt": "Charcoal home product, front view"
+      }
+    ],
+    "collections": ["home"],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": "1234567890123"
+  },
+  {
+    "id": "demo-091",
+    "title": "Sage Accessories Essential 091",
+    "description": "A versatile everyday essential with thoughtful details and quality construction.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "sage-accessories-091",
+    "seoTitle": "Sage Accessories Essential 091 | Northstar Goods",
+    "seoDescription": "Discover the sage accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 88.29,
+    "sku": "NS-0091",
+    "tags": ["accessories", "sage", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-091.jpg",
+        "alt": "Sage accessories product, front view"
+      }
+    ],
+    "collections": ["accessories"],
+    "attributes": {
+      "color": "Sage",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-092",
+    "title": "Sand Beauty Essential 092",
+    "description": "A versatile everyday essential with thoughtful details and quality construction.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "sand-beauty-092",
+    "seoTitle": "Sand Beauty Essential 092 | Northstar Goods",
+    "seoDescription": "Discover the sand beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 89.06,
+    "sku": "NS-0092",
+    "tags": ["beauty", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-092.jpg",
+        "alt": "Sand beauty product, front view"
+      }
+    ],
+    "collections": ["beauty"],
+    "attributes": {
+      "color": "Sand"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-093",
+    "title": "Indigo Apparel Essential 093",
+    "description": "A versatile everyday essential with thoughtful details and quality construction.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "indigo-apparel-093",
+    "seoTitle": "Indigo Apparel Essential 093 | Northstar Goods",
+    "seoDescription": "Discover the indigo apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 89.83,
+    "sku": "NS-0093",
+    "tags": ["apparel", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-093.jpg",
+        "alt": "Indigo apparel product, front view"
+      }
+    ],
+    "collections": [],
+    "attributes": {
+      "color": "Indigo",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-094",
+    "title": "Rose Home Essential 094",
+    "description": "A versatile everyday essential with thoughtful details and quality construction.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "rose-home-094",
+    "seoTitle": "Rose Home Essential 094 | Northstar Goods",
+    "seoDescription": "Discover the rose home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 90.6,
+    "sku": "NS-0094",
+    "tags": ["home", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-094.jpg",
+        "alt": "Rose home product, front view"
+      }
+    ],
+    "collections": [],
+    "attributes": {
+      "color": "Rose"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-095",
+    "title": "Charcoal Accessories Essential 095",
+    "description": "A versatile everyday essential with thoughtful details and quality construction. <a href=\"/products/missing-product\">related item</a>",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "charcoal-accessories-095",
+    "seoTitle": "Charcoal Accessories Essential 095 | Northstar Goods",
+    "seoDescription": "Discover the charcoal accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 91.37,
+    "sku": "NS-0095",
+    "tags": ["accessories", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-095.jpg",
+        "alt": "Charcoal accessories product, front view"
+      }
+    ],
+    "collections": [],
+    "attributes": {
+      "color": "Charcoal",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-096",
+    "title": "Sage Beauty Essential 096",
+    "description": "A versatile everyday essential with thoughtful details and quality construction.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "sage-beauty-096",
+    "seoTitle": "Sage Beauty Essential 096 | Northstar Goods",
+    "seoDescription": "Discover the sage beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 92.14,
+    "sku": "NS-0096",
+    "tags": ["beauty", "sage", "everyday"],
+    "images": [],
+    "collections": [],
+    "attributes": {
+      "color": "Sage"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-097",
+    "title": "Sand Apparel Essential 097",
+    "description": "A versatile everyday essential with thoughtful details and quality construction.",
+    "vendor": "Northstar Goods",
+    "productType": "Apparel",
+    "handle": "sand-apparel-097",
+    "seoTitle": "Sand Apparel Essential 097 | Northstar Goods",
+    "seoDescription": "Discover the sand apparel essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 92.91,
+    "sku": "NS-0097",
+    "tags": ["apparel", "sand", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-097.jpg",
+        "alt": "Sand apparel product, front view"
+      }
+    ],
+    "collections": [],
+    "attributes": {
+      "color": "Sand",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-098",
+    "title": "Indigo Home Essential 098",
+    "description": "A versatile everyday essential with thoughtful details and quality construction.",
+    "vendor": "Northstar Goods",
+    "productType": "Home",
+    "handle": "indigo-home-098",
+    "seoTitle": "Indigo Home Essential 098 | Northstar Goods",
+    "seoDescription": "Discover the indigo home essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 93.68,
+    "sku": "NS-0098",
+    "tags": ["home", "indigo", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-098.jpg",
+        "alt": "Indigo home product, front view"
+      }
+    ],
+    "collections": [],
+    "attributes": {
+      "color": "Indigo"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-099",
+    "title": "Rose Accessories Essential 099",
+    "description": "A versatile everyday essential with thoughtful details and quality construction.",
+    "vendor": "Northstar Goods",
+    "productType": "Accessories",
+    "handle": "rose-accessories-099",
+    "seoTitle": "Rose Accessories Essential 099 | Northstar Goods",
+    "seoDescription": "Discover the rose accessories essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 94.45,
+    "sku": "NS-0099",
+    "tags": ["accessories", "rose", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-099.jpg",
+        "alt": "Rose accessories product, front view"
+      }
+    ],
+    "collections": [],
+    "attributes": {
+      "color": "Rose",
+      "size": "M",
+      "material": "Cotton"
+    },
+    "gtin": null
+  },
+  {
+    "id": "demo-100",
+    "title": "Charcoal Beauty Essential 100",
+    "description": "A versatile everyday essential with thoughtful details and quality construction.",
+    "vendor": "Northstar Goods",
+    "productType": "Beauty",
+    "handle": "123456",
+    "seoTitle": "Charcoal Beauty Essential 100 | Northstar Goods",
+    "seoDescription": "Discover the charcoal beauty essential from Northstar Goods. Thoughtful design, quality materials, and versatile everyday comfort. Shop the collection today.",
+    "price": 95.22,
+    "sku": "NS-0100",
+    "tags": ["beauty", "charcoal", "everyday"],
+    "images": [
+      {
+        "url": "https://cdn.shopify.com/s/files/1/demo/product-100.jpg",
+        "alt": "Charcoal beauty product, front view"
+      }
+    ],
+    "collections": [],
+    "attributes": {
+      "color": "Charcoal"
+    },
+    "gtin": null
+  }
+]
