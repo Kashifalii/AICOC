@@ -398,8 +398,8 @@ export function Dashboard() {
                 <span />
                 Store connected
               </span>
-              <Button variant="outline" size="sm" onClick={startDemo} disabled={busy}>
-                <Plus size={15} /> Add products
+              <Button variant="outline" size="sm" onClick={() => setActive("Stores & import")}>
+                <Plus size={15} /> Import products
               </Button>
               <div className="profile-avatar top-avatar">JD</div>
             </div>
@@ -617,9 +617,9 @@ export function Dashboard() {
                         <h2>Store health over time</h2>
                         <p>Your content quality score across recent audits</p>
                       </div>
-                      <button className="range-select">
-                        Last 30 days <ChevronDown size={14} />
-                      </button>
+                      <span className="range-select" aria-label="Showing recent audit history">
+                        Recent audits
+                      </span>
                     </div>
                     <div className="chart-legend">
                       <span>
@@ -685,7 +685,11 @@ export function Dashboard() {
                         <h2>Issues by severity</h2>
                         <p>Prioritize what matters most</p>
                       </div>
-                      <button className="more-button" aria-label="More severity options">
+                      <button
+                        className="more-button"
+                        aria-label="Review issues by severity"
+                        onClick={() => setActive("Review queue")}
+                      >
                         Â·Â·Â·
                       </button>
                     </div>
@@ -783,7 +787,11 @@ export function Dashboard() {
                         <h2>Issues by category</h2>
                         <p>Findings from the latest audit</p>
                       </div>
-                      <button className="more-button" aria-label="More category options">
+                      <button
+                        className="more-button"
+                        aria-label="Review issues by category"
+                        onClick={() => setActive("Review queue")}
+                      >
                         Â·Â·Â·
                       </button>
                     </div>
@@ -966,8 +974,8 @@ export function Dashboard() {
             <footer className="page-footer">
               <span>Â© 2026 Orbit Commerce Â· Built for better product pages</span>
               <span>
-                <a href="#privacy">Privacy</a>
-                <a href="#help">Help center</a>
+                <span>Privacy</span>
+                <span>Help center</span>
                 <span className="footer-status">
                   <Activity size={13} /> All systems operational
                 </span>

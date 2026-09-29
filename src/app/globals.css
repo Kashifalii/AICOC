@@ -196,7 +196,6 @@
   border-radius: var(--radius);
   background: var(--card);
   margin-bottom: 28px;
-  cursor: pointer;
 }
 .workspace-avatar,
 .profile-avatar {
@@ -682,7 +681,6 @@
   color: var(--muted-foreground);
   padding: 6px 8px;
   font-size: 9px;
-  cursor: pointer;
 }
 .chart-legend {
   justify-content: flex-start;

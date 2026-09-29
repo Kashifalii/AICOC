@@ -40,5 +40,7 @@
 ## Phase 5 — Limits and Polish (partial)
 
 - Added responsive dashboard styling, theme token definitions, usage display, docs and CI.
+- Final polish pass connected the dashboard import and chart actions to real navigation and removed misleading fixed date-range and dead footer links.
 - Status: AI generation calls the atomic daily/monthly quota function; product/audit/publish reservations and usage-meter synchronization remain open. Activity log, WCAG audit, Lighthouse, deploy and full README-only acceptance verification remain open.
+- Verification after the polish pass: `npm run format`, `npm run lint`, `npm run typecheck`, `npm run test` (10 tests) and `npm run build` pass.
 - Commit: included in the consolidated implementation commit; phase remains partial.
