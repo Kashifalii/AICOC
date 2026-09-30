@@ -9,6 +9,7 @@ import { factLock } from "@/lib/ai/fact-lock";
 import { sanitizeDescriptionHtml } from "@/lib/ai/sanitize";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getAuthenticatedWorkspace } from "@/lib/supabase/server";
+import { roleCan } from "@/lib/authz/roles";
 
 const inputSchema = z.object({
   title: z.string().max(300),
@@ -43,7 +44,7 @@ export async function POST(request: Request) {
       { error: { code: "UNAUTHENTICATED", message: "Sign in to generate AI suggestions." } },
       { status: 401 },
     );
-  if (context.role !== "Owner" && context.role !== "Editor")
+  if (!roleCan(context.role, "suggestion:generate"))
     return NextResponse.json(
       {
         error: { code: "FORBIDDEN", message: "Only Owners and Editors may generate suggestions." },

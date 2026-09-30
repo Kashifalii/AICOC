@@ -4,6 +4,7 @@ import { demoProducts } from "@/data/demo-products";
 import { toDemoProductRow } from "@/lib/jobs/demo-products";
 import { getBatchWindow } from "@/lib/jobs/batch";
 import { getAuthenticatedWorkspace } from "@/lib/supabase/server";
+import { roleCan } from "@/lib/authz/roles";
 
 const batchSize = 10;
 const paramsSchema = z.object({ jobId: z.string().uuid() });
@@ -19,8 +20,7 @@ export async function POST(_request: Request, context: { params: Promise<{ jobId
   try {
     const { supabase, user, workspaceId, role } = await getAuthenticatedWorkspace();
     if (!user || !workspaceId) return apiError("UNAUTHENTICATED", "Sign in to run this job", 401);
-    if (role !== "Owner" && role !== "Editor")
-      return apiError("FORBIDDEN", "Editor access is required", 403);
+    if (!roleCan(role, "job:run")) return apiError("FORBIDDEN", "Editor access is required", 403);
 
     const { data: jobRow, error: jobReadError } = await supabase
       .from("jobs")

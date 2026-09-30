@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { env } from "@/config/env";
 import { getAuthenticatedWorkspace } from "@/lib/supabase/server";
 import { createOAuthState, validShopDomain } from "@/lib/shopify/oauth";
+import { roleCan } from "@/lib/authz/roles";
 
 export async function GET(request: Request) {
   const { user, role } = await getAuthenticatedWorkspace();
@@ -11,7 +12,7 @@ export async function GET(request: Request) {
       { error: { code: "UNAUTHENTICATED", message: "Sign in before connecting a store." } },
       { status: 401 },
     );
-  if (role !== "Owner")
+  if (!roleCan(role, "store:connect"))
     return NextResponse.json(
       {
         error: {

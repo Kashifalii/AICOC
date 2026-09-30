@@ -44,6 +44,14 @@
 - Remaining: call the checker from audit jobs and persist audit issues/history. The rule implementations are complete; audit workflow requirements remain open and traced separately.
 - Commit: committed as a separate continuation change.
 
+## Continuation 3 — Tenant and role enforcement (partial)
+
+- Added session middleware, membership-validated active workspace selection, a shared Owner/Editor/Reviewer/Viewer capability matrix, and route checks for AI suggestion generation, demo import batches, and Shopify OAuth.
+- Added role-scoped RLS policies across tenant tables and tenant relationship triggers that reject cross-workspace product/store, audit, suggestion, job and publish references. Added tests for role capabilities, public route boundaries, and expected RLS declarations.
+- Verification: `npm run format`, `npm run lint`, `npm run typecheck`, `npm run test`, and `npm run build` are run for this continuation. The RLS test checks migration declarations only; actual cross-tenant behavior still requires applying migrations to a Supabase/Postgres instance.
+- Remaining: route-level role coverage for all write operations, user/member management, role-aware UI, and live database integration. Status remains partial until those are verified.
+- Commit: committed as a separate continuation change.
+
 ## Phase 3 — AI Copilot (partial)
 
 - Added official Gemini SDK adapter, JSON-schema constrained suggestions, Zod output validation, one validation retry, versioned prompt, workspace response cache, atomic daily/monthly quota reservation, bounded 429 retry, numeric/material/size fact-lock, HTML sanitizer and server authorization checks.

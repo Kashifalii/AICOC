@@ -6,6 +6,7 @@ import { getAuthenticatedWorkspace } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { encryptSecret } from "@/lib/security/crypto";
 import { validShopDomain, verifyShopifyHmac } from "@/lib/shopify/oauth";
+import { roleCan } from "@/lib/authz/roles";
 
 const tokenSchema = z.object({ access_token: z.string().min(1), scope: z.string().optional() });
 export async function GET(request: Request) {
@@ -29,7 +30,7 @@ export async function GET(request: Request) {
     return response;
   };
   if (!user || !workspaceId) return finish("UNAUTHENTICATED", 401);
-  if (role !== "Owner") return finish("FORBIDDEN", 403);
+  if (!roleCan(role, "store:connect")) return finish("FORBIDDEN", 403);
   if (!env.SHOPIFY_API_SECRET || !env.SHOPIFY_API_KEY || !validShopDomain(shop))
     return finish("SHOPIFY_NOT_CONFIGURED", 503);
   if (!savedState || !state || savedState !== state) return finish("INVALID_OAUTH_STATE", 400);

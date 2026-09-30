@@ -105,7 +105,7 @@ export function Dashboard() {
       setBusy(false);
       setActive("Overview");
       setMessage(
-        `Audit complete Â· ${found.length} opportunities found across ${products.length} products`,
+        `Audit complete · ${found.length} opportunities found across ${products.length} products`,
       );
     }, 180);
   };
@@ -139,7 +139,7 @@ export function Dashboard() {
           throw new Error(batchResult.error?.message ?? "Demo Store import batch failed");
         if (batchResult.job) job = batchResult.job;
         attempts += 1;
-        setMessage(`Saving Demo Store Â· ${job.progress?.completed ?? 0} / 100 products`);
+        setMessage(`Saving Demo Store · ${job.progress?.completed ?? 0} / 100 products`);
         if (batchResult.busy) await new Promise((resolve) => window.setTimeout(resolve, 700));
       }
       if (job.status !== "completed")
@@ -162,7 +162,7 @@ export function Dashboard() {
       setApproved([]);
       setApprovedValues({});
       setMessage(
-        `Demo Store loaded Â· ${result.products.length} products ready to audit${job.progress?.failed ? ` Â· ${job.progress.failed} item failures` : ""}`,
+        `Demo Store loaded · ${result.products.length} products ready to audit${job.progress?.failed ? ` · ${job.progress.failed} item failures` : ""}`,
       );
     } catch (error) {
       setMessage(
@@ -279,7 +279,7 @@ export function Dashboard() {
     setApprovedValues({});
     setSelected(null);
     setMessage(
-      `Demo changes applied Â· Content Health Score ${before} â†’ ${after} (${after - before >= 0 ? "+" : ""}${after - before})`,
+      `Demo changes applied · Content Health Score ${before} → ${after} (${after - before >= 0 ? "+" : ""}${after - before})`,
     );
   };
   const exportApproved = () => {
@@ -403,7 +403,7 @@ export function Dashboard() {
               <div className="usage-track">
                 <div style={{ width: `${Math.min(100, products.length)}%` }} />
               </div>
-              <span className="usage-caption">Free plan Â· resets Oct 1</span>
+              <span className="usage-caption">Free plan · resets Oct 1</span>
             </div>
             <button className="nav-item settings-nav" onClick={() => setActive("Settings")}>
               <Settings2 size={17} /> Settings
@@ -451,7 +451,7 @@ export function Dashboard() {
                 <h1>{active === "Overview" ? "Good morning, Jordan" : active}</h1>
                 <p>
                   {active === "Overview"
-                    ? "Hereâ€™s whatâ€™s happening with your product catalog."
+                    ? "Here’s what’s happening with your product catalog."
                     : "Review product quality and turn opportunities into approved improvements."}
                 </p>
               </div>
@@ -468,7 +468,7 @@ export function Dashboard() {
                   <span className={busy ? "animate-spin" : ""}>
                     {busy ? <LoaderCircle size={16} /> : <Sparkles size={16} />}
                   </span>
-                  {busy ? "Workingâ€¦" : "Run audit"}
+                  {busy ? "Working…" : "Run audit"}
                 </Button>
               </div>
             </section>
@@ -544,7 +544,7 @@ export function Dashboard() {
                           setApproved([]);
                           setApprovedValues({});
                           setMessage(
-                            `Imported ${imported.length} products from ${file.name}${mapped.errors.length ? ` Â· ${mapped.errors.length} invalid rows exported` : ""}`,
+                            `Imported ${imported.length} products from ${file.name}${mapped.errors.length ? ` · ${mapped.errors.length} invalid rows exported` : ""}`,
                           );
                           setActive("Overview");
                         } catch {
@@ -728,7 +728,7 @@ export function Dashboard() {
                         aria-label="Review issues by severity"
                         onClick={() => setActive("Review queue")}
                       >
-                        Â·Â·Â·
+                        …
                       </button>
                     </div>
                     <div className="severity-summary">
@@ -805,7 +805,7 @@ export function Dashboard() {
                               <span className={`severity-indicator severity-${item.severity}`} />
                               <span className="issue-main">
                                 <strong>
-                                  {item.ruleId} Â· {item.field}
+                                  {item.ruleId} · {item.field}
                                 </strong>
                                 <small>{item.productTitle}</small>
                               </span>
@@ -830,7 +830,7 @@ export function Dashboard() {
                         aria-label="Review issues by category"
                         onClick={() => setActive("Review queue")}
                       >
-                        Â·Â·Â·
+                        …
                       </button>
                     </div>
                     <div className="category-list">
@@ -1010,7 +1010,7 @@ export function Dashboard() {
               </section>
             )}
             <footer className="page-footer">
-              <span>Â© 2026 Orbit Commerce Â· Built for better product pages</span>
+              <span>© 2026 Orbit Commerce · Built for better product pages</span>
               <span>
                 <span>Privacy</span>
                 <span>Help center</span>
@@ -1043,7 +1043,7 @@ export function Dashboard() {
                 </button>
               </div>
               <div className="drawer-rule">
-                {selected.ruleId} <span>Â·</span> {selected.category}
+                {selected.ruleId} <span>·</span> {selected.category}
               </div>
               <h2 id="drawer-title">{selected.field} needs attention</h2>
               <p className="drawer-description">
@@ -1055,7 +1055,7 @@ export function Dashboard() {
                 <div>
                   <strong>{selected.productTitle}</strong>
                   <span>
-                    {selected.productId} Â·{" "}
+                    {selected.productId} ·{" "}
                     {products.find((p) => p.id === selected.productId)?.productType}
                   </span>
                 </div>

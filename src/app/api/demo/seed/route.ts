@@ -3,6 +3,7 @@ import { z } from "zod";
 import { demoProducts } from "@/data/demo-products";
 import { getAuthenticatedWorkspace } from "@/lib/supabase/server";
 import { fromDemoProductRow } from "@/lib/jobs/demo-products";
+import { roleCan } from "@/lib/authz/roles";
 
 const requestSchema = z.object({ idempotencyKey: z.string().uuid().optional() }).strict();
 
@@ -18,7 +19,7 @@ export async function POST(request: Request) {
     const { supabase, user, workspaceId, role } = await getAuthenticatedWorkspace();
     if (!user || !workspaceId)
       return apiError("UNAUTHENTICATED", "Sign in to load a saved Demo Store", 401);
-    if (role !== "Owner" && role !== "Editor")
+    if (!roleCan(role, "store:import"))
       return apiError("FORBIDDEN", "Editor access is required", 403);
 
     const { data: existingStore, error: storeReadError } = await supabase
