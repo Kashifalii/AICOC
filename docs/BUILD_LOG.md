@@ -52,6 +52,14 @@
 - Remaining: route-level role coverage for all write operations, user/member management, role-aware UI, and live database integration. Status remains partial until those are verified.
 - Commit: committed as a separate continuation change.
 
+## Continuation 4 — AI drafts and approval state API (partial)
+
+- AI suggestions now require a workspace product and supported field, then persist a draft suggestion with its source value, model and prompt version. Added a role-checked transition endpoint for draft submission and human review; state changes call the database state-machine function.
+- Added a regression assertion that the publish-item database trigger accepts only approved suggestions. The trigger is the server-side gate; there is not yet an export/Shopify publish endpoint that uses it.
+- Verification: `npm run format`, `npm run lint`, `npm run typecheck`, `npm run test` (35 tests), and `npm run build` pass. Live Gemini, database-backed suggestion insertion and cross-tenant publish gate tests require configured credentials/database.
+- Remaining: explanations and other AI tasks, durable AI generation queue, connect suggestion IDs to the review UI, editable/versioned persistence, and publish/export service integration.
+- Commit: committed as a separate continuation change.
+
 ## Phase 3 — AI Copilot (partial)
 
 - Added official Gemini SDK adapter, JSON-schema constrained suggestions, Zod output validation, one validation retry, versioned prompt, workspace response cache, atomic daily/monthly quota reservation, bounded 429 retry, numeric/material/size fact-lock, HTML sanitizer and server authorization checks.

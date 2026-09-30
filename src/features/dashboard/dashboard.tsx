@@ -182,6 +182,9 @@ export function Dashboard() {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
+          productId: product.id,
+          field: issue.field,
+          currentValue: issue.currentValue,
           title: product.title,
           description: product.description,
           vendor: product.vendor,

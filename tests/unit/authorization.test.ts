@@ -59,4 +59,11 @@ describe("authentication and database access policies", () => {
     expect(sql).toContain("is_workspace_owner(workspace_id)");
     expect(sql).toContain("is_workspace_editor(workspace_id)");
   });
+
+  it("requires approved state in the database publish-item trigger", () => {
+    const sql = readFileSync("supabase/migrations/202609300001_initial_schema.sql", "utf8");
+    expect(sql).toContain("publish_items_require_approval");
+    expect(sql).toContain("status='approved'");
+    expect(sql).toContain("transition_suggestion");
+  });
 });
