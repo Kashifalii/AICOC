@@ -42,7 +42,7 @@ import {
   WandSparkles,
   X,
 } from "lucide-react";
-import demoProducts from "@/data/demo-store.json";
+import { demoProducts } from "@/data/demo-products";
 import type { Product, AuditIssue } from "@/lib/audit/types";
 import { auditProducts } from "@/lib/audit/rules";
 import { scoreStore } from "@/lib/audit/scoring";
@@ -51,7 +51,7 @@ import { Button } from "@/components/ui/button";
 import { SuggestionTable } from "@/features/review/suggestion-table";
 
 type ProductRecord = Product;
-const originalProducts = demoProducts as ProductRecord[];
+const originalProducts = demoProducts;
 
 export function Dashboard() {
   const [products, setProducts] = useState<ProductRecord[]>(originalProducts);

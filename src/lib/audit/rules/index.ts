@@ -3,109 +3,253 @@ import { contentHash, normalizeText, wordCount } from "../text";
 import { jaccardSimilarity } from "../duplicates";
 import { productJsonLd, validateProductJsonLd } from "../jsonld";
 
-const WEIGHT: Record<Severity, number> = { critical: 10, high: 6, medium: 3, low: 1 };
-const issue = (
-  p: Product,
-  ruleId: string,
+export const RULE_IDS = [
+  "SEO-001",
+  "SEO-002",
+  "SEO-003",
+  "SEO-004",
+  "SEO-005",
+  "SEO-006",
+  "IMG-001",
+  "IMG-002",
+  "CNT-001",
+  "CNT-002",
+  "CNT-003",
+  "CNT-004",
+  "DAT-001",
+  "DAT-002",
+  "DAT-003",
+  "SCH-001",
+  "SCH-002",
+  "LNK-001",
+  "LNK-002",
+] as const;
+
+const SEVERITY_WEIGHT: Record<Severity, number> = { critical: 10, high: 6, medium: 3, low: 1 };
+const VOID_TAGS = new Set([
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "param",
+  "source",
+  "track",
+  "wbr",
+]);
+const CATEGORY_FIELDS: Record<string, string[]> = {
+  apparel: ["size", "color", "material"],
+  clothing: ["size", "color", "material"],
+  home: ["material"],
+  accessories: ["size", "color", "material"],
+  beauty: ["ingredients"],
+  cosmetics: ["ingredients"],
+};
+
+export function requiredAttributesFor(category: string): string[] {
+  return CATEGORY_FIELDS[normalizeText(category)] ?? [];
+}
+
+export function issueImpact(severity: Severity, reach = 1, fixability: 1 | 0.6 | 0.3 = 1): number {
+  return SEVERITY_WEIGHT[severity] * Math.max(1, reach) * fixability;
+}
+
+function createIssue(
+  product: Product,
+  ruleId: (typeof RULE_IDS)[number],
   category: string,
   severity: Severity,
   field: string,
   evidence: string,
-  value: string,
-): AuditIssue => ({
-  id: `${ruleId}:${p.id}:${field}`,
-  ruleId,
-  category,
-  severity,
-  productId: p.id,
-  productTitle: p.title,
-  field,
-  evidence,
-  currentValue: value,
-  impact: WEIGHT[severity],
-});
+  currentValue: string,
+  reach = 1,
+  fixability: 1 | 0.6 | 0.3 = 1,
+): AuditIssue {
+  return {
+    id: `${ruleId}:${product.id}:${field}:${contentHash(evidence)}`,
+    ruleId,
+    category,
+    severity,
+    productId: product.id,
+    productTitle: product.title,
+    field,
+    evidence,
+    currentValue,
+    impact: issueImpact(severity, reach, fixability),
+  };
+}
+
+function isKeywordStuffed(alt: string): boolean {
+  const words = normalizeText(alt)
+    .split(" ")
+    .filter((word) => word.length > 2);
+  if (words.length < 6) return false;
+  const counts = new Map<string, number>();
+  for (const word of words) counts.set(word, (counts.get(word) ?? 0) + 1);
+  return (
+    [...counts.values()].some((count) => count >= 3) ||
+    [...counts.values()].some((count) => count / words.length >= 0.5)
+  );
+}
+
+export function hasMalformedOrBloatedHtml(html: string): boolean {
+  if (/<(?!\/?[a-z][a-z0-9-]*(?:\s[^<>]*?)?\s*\/?>|!--)/i.test(html)) return true;
+  const stack: string[] = [];
+  const tags = /<!--([\s\S]*?)-->|<\/?([a-z][a-z0-9-]*)\b([^<>]*?)>/gi;
+  for (const match of html.matchAll(tags)) {
+    if (match[1] !== undefined) continue;
+    const token = match[0];
+    const tag = match[2].toLowerCase();
+    const attributes = match[3] ?? "";
+    if (/\bstyle\s*=/i.test(attributes)) return true;
+    const isClosing = /^<\//.test(token);
+    const isSelfClosing = /\/\s*>$/.test(token);
+    if (VOID_TAGS.has(tag) || isSelfClosing) continue;
+    if (isClosing) {
+      if (stack.pop() !== tag) return true;
+    } else {
+      stack.push(tag);
+      if (new RegExp(`<${tag}\\b[^>]*>\\s*<\\/${tag}\\s*>`, "i").test(html)) return true;
+    }
+  }
+  return stack.length > 0;
+}
+
+export function extractInternalProductHandles(description: string): string[] {
+  const handles: string[] = [];
+  const hrefs = /\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/gi;
+  for (const match of description.matchAll(hrefs)) {
+    const value = (match[1] ?? match[2] ?? match[3] ?? "").trim();
+    if (!value.startsWith("/") || value.startsWith("//")) continue;
+    const productPath = value.split(/[?#]/, 1)[0].match(/^\/products\/([^/]+)\/?$/i);
+    if (productPath?.[1]) {
+      try {
+        handles.push(decodeURIComponent(productPath[1]));
+      } catch {
+        handles.push(productPath[1]);
+      }
+    }
+  }
+  return handles;
+}
+
+function invalidJsonMetafields(product: Product): string[] {
+  return Object.entries(product.metafields ?? {})
+    .filter(([, metafield]) => metafield.type.toLowerCase() === "json")
+    .filter(([, metafield]) => {
+      try {
+        JSON.parse(metafield.value);
+        return false;
+      } catch {
+        return true;
+      }
+    })
+    .map(([key]) => key);
+}
 
 export function auditProducts(
   products: Product[],
   threshold = 0.8,
-  brokenInternalLinks: ReadonlySet<string> = new Set(),
+  externallyBrokenProductIds: ReadonlySet<string> = new Set(),
 ): AuditIssue[] {
   const results: AuditIssue[] = [];
-  const titleCounts = new Map<string, number>();
-  for (const p of products) {
-    const k = normalizeText(p.seoTitle);
-    if (k) titleCounts.set(k, (titleCounts.get(k) ?? 0) + 1);
-  }
-  for (const p of products) {
-    const seo = p.seoTitle.trim();
-    const meta = p.seoDescription.trim();
-    if (!seo)
+  const seoTitleOwners = new Map<string, Product[]>();
+  const handles = new Set(products.map((product) => product.handle.toLowerCase()).filter(Boolean));
+  const inboundHandles = new Set<string>();
+  for (const product of products)
+    for (const target of extractInternalProductHandles(product.description))
+      inboundHandles.add(target.toLowerCase());
+
+  for (const product of products) {
+    const seoTitle = product.seoTitle.trim();
+    const metaDescription = product.seoDescription.trim();
+    const normalizedSeoTitle = normalizeText(seoTitle);
+    if (!normalizedSeoTitle) {
       results.push(
-        issue(p, "SEO-001", "SEO metadata", "critical", "seoTitle", "SEO title is empty", seo),
-      );
-    else if (seo.length < 30 || seo.length > 60)
-      results.push(
-        issue(
-          p,
-          "SEO-002",
+        createIssue(
+          product,
+          "SEO-001",
           "SEO metadata",
-          "medium",
+          "critical",
           "seoTitle",
-          `${seo.length} characters; expected 30-60`,
-          seo,
+          "SEO title is empty",
+          seoTitle,
         ),
       );
-    if (seo && (titleCounts.get(normalizeText(seo)) ?? 0) > 1)
+    } else {
+      const owners = seoTitleOwners.get(normalizedSeoTitle) ?? [];
+      owners.push(product);
+      seoTitleOwners.set(normalizedSeoTitle, owners);
+      if (seoTitle.length < 30 || seoTitle.length > 60)
+        results.push(
+          createIssue(
+            product,
+            "SEO-002",
+            "SEO metadata",
+            "medium",
+            "seoTitle",
+            `${seoTitle.length} characters; expected 30-60`,
+            seoTitle,
+          ),
+        );
+    }
+    if (!metaDescription) {
       results.push(
-        issue(p, "SEO-003", "SEO metadata", "high", "seoTitle", "SEO title is duplicated", seo),
-      );
-    if (!meta)
-      results.push(
-        issue(
-          p,
+        createIssue(
+          product,
           "SEO-004",
           "SEO metadata",
           "high",
           "seoDescription",
           "Meta description is empty",
-          meta,
+          metaDescription,
         ),
       );
-    else if (meta.length < 70 || meta.length > 160)
+    } else if (metaDescription.length < 70 || metaDescription.length > 160) {
       results.push(
-        issue(
-          p,
+        createIssue(
+          product,
           "SEO-005",
           "SEO metadata",
           "medium",
           "seoDescription",
-          `${meta.length} characters; expected 70-160`,
-          meta,
+          `${metaDescription.length} characters; expected 70-160`,
+          metaDescription,
         ),
       );
+    }
     if (
-      p.handle !== p.handle.toLowerCase() ||
-      /[^a-z0-9-]/.test(p.handle) ||
-      p.handle.length > 75 ||
-      /^\d+$/.test(p.handle)
-    )
+      !product.handle ||
+      product.handle !== product.handle.toLowerCase() ||
+      /[^a-z0-9-]/.test(product.handle) ||
+      product.handle.length > 75 ||
+      /^\d+$/.test(product.handle)
+    ) {
       results.push(
-        issue(
-          p,
+        createIssue(
+          product,
           "SEO-006",
           "SEO metadata",
           "low",
           "handle",
-          "Handle is uppercase, malformed, too long, or numeric-only",
-          p.handle,
+          "Handle is empty, uppercase, malformed, too long, or numeric-only",
+          product.handle,
         ),
       );
-    for (const image of p.images) {
-      const filename = image.url.split("/").pop()?.split("?")[0] ?? "";
-      if (!image.alt.trim())
+    }
+
+    for (const image of product.images) {
+      const alt = image.alt.trim();
+      const filename = image.url.split("/").pop()?.split(/[?#]/)[0] ?? "";
+      if (!alt) {
         results.push(
-          issue(
-            p,
+          createIssue(
+            product,
             "IMG-001",
             "Image accessibility",
             "high",
@@ -114,86 +258,97 @@ export function auditProducts(
             "",
           ),
         );
-      else if (
-        normalizeText(image.alt) === normalizeText(filename) ||
-        image.alt.trim().length < 5 ||
-        (image.alt.match(/\b\w+\b/g)?.length ?? 0) > 20
-      )
+      } else if (
+        normalizeText(alt) === normalizeText(filename) ||
+        normalizeText(alt) === normalizeText(filename.replace(/\.[a-z0-9]{2,5}$/i, "")) ||
+        alt.length < 5 ||
+        isKeywordStuffed(alt)
+      ) {
         results.push(
-          issue(
-            p,
+          createIssue(
+            product,
             "IMG-002",
             "Image accessibility",
             "medium",
             "images.alt",
-            "Alt text resembles a filename, is too short, or is keyword-stuffed",
-            image.alt,
+            "Alt text resembles a filename, is too short, or repeats keywords",
+            alt,
           ),
         );
+      }
     }
-    if (wordCount(p.description) < 50)
+
+    const description = product.description;
+    if (wordCount(description) < 50)
       results.push(
-        issue(
-          p,
+        createIssue(
+          product,
           "CNT-001",
           "Content uniqueness",
           "high",
           "description",
-          `Description has ${wordCount(p.description)} words; expected at least 50`,
-          p.description,
+          `Description has ${wordCount(description)} words; expected at least 50`,
+          description,
         ),
       );
-    const openingTags = [...p.description.matchAll(/<([a-z]+)\b[^>]*>/gi)]
-      .map((match) => match[1].toLowerCase())
-      .filter(
-        (tag) => !["img", "br", "hr", "input", "meta", "link", "source", "wbr"].includes(tag),
-      );
-    const unclosed = openingTags.some(
-      (tag) =>
-        countMatches(p.description, `<${tag}\\b`) > countMatches(p.description, `<\\/${tag}\\s*>`),
-    );
-    if (unclosed || /\bstyle\s*=|<\w+\b[^>]*>\s*<\/\w+>/i.test(p.description))
+    if (hasMalformedOrBloatedHtml(description))
       results.push(
-        issue(
-          p,
+        createIssue(
+          product,
           "CNT-004",
           "Content uniqueness",
           "low",
           "description",
-          "Description contains unclosed or empty tags or inline styling",
-          p.description,
+          "Description contains malformed, empty, or bloated HTML",
+          description,
         ),
       );
-    if (!p.vendor || !p.productType || p.price <= 0 || !p.sku || !p.tags.length)
+
+    if (
+      !product.vendor.trim() ||
+      !product.productType.trim() ||
+      !Number.isFinite(product.price) ||
+      !product.sku.trim() ||
+      !product.tags.some((tag) => tag.trim())
+    ) {
       results.push(
-        issue(
-          p,
+        createIssue(
+          product,
           "DAT-001",
           "Attributes",
           "high",
           "catalog",
-          "One or more required fields are missing or invalid",
-          [p.vendor, p.productType, p.price, p.sku, p.tags.length].join(" | "),
+          "One or more required catalog fields are missing",
+          [
+            product.vendor,
+            product.productType,
+            product.price,
+            product.sku,
+            product.tags.length,
+          ].join(" | "),
         ),
       );
-    if (p.price <= 0 || (p.gtin && !validGtin(p.gtin)))
+    }
+    const badMetafields = invalidJsonMetafields(product);
+    if (product.price <= 0 || (product.gtin && !validGtin(product.gtin)) || badMetafields.length) {
       results.push(
-        issue(
-          p,
+        createIssue(
+          product,
           "DAT-002",
           "Attributes",
           "high",
           "metadata",
-          "Price or GTIN metadata is invalid",
-          `${p.price} | ${p.gtin ?? "no GTIN"}`,
+          `Invalid price, GTIN, or JSON metafield${badMetafields.length ? `: ${badMetafields.join(", ")}` : ""}`,
+          `${product.price} | ${product.gtin ?? "no GTIN"}`,
         ),
       );
-    const required = CATEGORY_FIELDS[p.productType.toLowerCase()] ?? [];
-    const missing = required.filter((key) => !p.attributes[key]);
+    }
+    const required = requiredAttributesFor(product.productType);
+    const missing = required.filter((key) => !product.attributes[key]?.trim());
     if (missing.length)
       results.push(
-        issue(
-          p,
+        createIssue(
+          product,
           "DAT-003",
           "Attributes",
           "medium",
@@ -202,142 +357,160 @@ export function auditProducts(
           "",
         ),
       );
-    if (!p.collections.length)
+
+    const productLinks = extractInternalProductHandles(description);
+    const missingTargets = productLinks.filter((handle) => !handles.has(handle.toLowerCase()));
+    if (externallyBrokenProductIds.has(product.id) || missingTargets.length)
       results.push(
-        issue(
-          p,
-          "LNK-002",
-          "Internal links",
-          "medium",
-          "collections",
-          "Product is not assigned to a collection",
-          "",
-        ),
-      );
-    if (brokenInternalLinks.has(p.id))
-      results.push(
-        issue(
-          p,
+        createIssue(
+          product,
           "LNK-001",
           "Internal links",
           "medium",
           "description.links",
-          "Internal product link is broken or exceeds the permitted redirect chain",
-          p.description,
+          `Broken internal product link${missingTargets.length ? `: ${missingTargets.join(", ")}` : ""}`,
+          description,
         ),
       );
-    const schemaIssues = validateProductJsonLd(productJsonLd(p));
-    if (schemaIssues.some((item) => item.severity === "critical"))
+    if (!product.collections.length && !inboundHandles.has(product.handle.toLowerCase()))
       results.push(
-        issue(
-          p,
+        createIssue(
+          product,
+          "LNK-002",
+          "Internal links",
+          "medium",
+          "collections",
+          "Product has no collection and no inbound product link",
+          "",
+        ),
+      );
+
+    const schemaIssues = validateProductJsonLd(productJsonLd(product));
+    const requiredSchemaIssues = schemaIssues.filter((item) => item.severity === "critical");
+    const recommendedSchemaIssues = schemaIssues.filter((item) => item.severity === "low");
+    if (requiredSchemaIssues.length)
+      results.push(
+        createIssue(
+          product,
           "SCH-001",
           "Structured data",
           "critical",
           "jsonld.required",
-          schemaIssues
-            .filter((item) => item.severity === "critical")
-            .map((item) => item.field)
-            .join(", "),
-          JSON.stringify(productJsonLd(p)),
+          requiredSchemaIssues.map((item) => item.field).join(", "),
+          JSON.stringify(productJsonLd(product)),
         ),
       );
-    if (schemaIssues.some((item) => item.severity === "low"))
+    if (recommendedSchemaIssues.length)
       results.push(
-        issue(
-          p,
+        createIssue(
+          product,
           "SCH-002",
           "Structured data",
           "low",
           "jsonld.recommended",
-          schemaIssues
-            .filter((item) => item.severity === "low")
-            .map((item) => item.field)
-            .join(", "),
-          JSON.stringify(productJsonLd(p)),
+          recommendedSchemaIssues.map((item) => item.field).join(", "),
+          JSON.stringify(productJsonLd(product)),
         ),
       );
   }
-  const seen = new Map<string, Product[]>();
-  for (const p of products) {
-    const key = contentHash(p.description);
-    const cluster = seen.get(key) ?? [];
-    cluster.push(p);
-    seen.set(key, cluster);
+
+  for (const [title, owners] of seoTitleOwners) {
+    if (owners.length < 2) continue;
+    for (const product of owners)
+      results.push(
+        createIssue(
+          product,
+          "SEO-003",
+          "SEO metadata",
+          "high",
+          "seoTitle",
+          `SEO title duplicated across ${owners.length} products`,
+          title,
+          owners.length,
+          0.6,
+        ),
+      );
   }
-  for (const cluster of seen.values())
-    if (cluster.length > 1)
-      for (const p of cluster)
+
+  const descriptionGroups = new Map<string, Product[]>();
+  for (const product of products) {
+    const key = contentHash(product.description);
+    const group = descriptionGroups.get(key) ?? [];
+    group.push(product);
+    descriptionGroups.set(key, group);
+  }
+  for (const candidates of descriptionGroups.values()) {
+    const byNormalizedDescription = new Map<string, Product[]>();
+    for (const product of candidates) {
+      const normalized = normalizeText(product.description);
+      const group = byNormalizedDescription.get(normalized) ?? [];
+      group.push(product);
+      byNormalizedDescription.set(normalized, group);
+    }
+    for (const cluster of byNormalizedDescription.values()) {
+      if (cluster.length < 2) continue;
+      for (const product of cluster)
         results.push(
-          issue(
-            p,
+          createIssue(
+            product,
             "CNT-002",
             "Content uniqueness",
             "critical",
             "description",
-            `Exact description duplicate cluster of ${cluster.length} products`,
-            p.description,
+            `Exact normalized-description duplicate cluster of ${cluster.length} products`,
+            product.description,
+            cluster.length,
+            0.6,
           ),
         );
-  for (let i = 0; i < products.length; i++)
-    for (let j = i + 1; j < products.length; j++) {
-      if (
-        contentHash(products[i].description) !== contentHash(products[j].description) &&
-        jaccardSimilarity(products[i].description, products[j].description) >= threshold
-      ) {
-        results.push(
-          issue(
-            products[i],
-            "CNT-003",
-            "Content uniqueness",
-            "high",
-            "description",
-            `Near-duplicate candidate with ${products[j].title}`,
-            products[i].description,
-          ),
-        );
-        results.push(
-          issue(
-            products[j],
-            "CNT-003",
-            "Content uniqueness",
-            "high",
-            "description",
-            `Near-duplicate candidate with ${products[i].title}`,
-            products[j].description,
-          ),
-        );
-      }
     }
+  }
+
+  for (let left = 0; left < products.length; left++) {
+    for (let right = left + 1; right < products.length; right++) {
+      const a = products[left];
+      const b = products[right];
+      if (normalizeText(a.description) === normalizeText(b.description)) continue;
+      const similarity = jaccardSimilarity(a.description, b.description);
+      if (similarity < threshold) continue;
+      const evidence = `Near-duplicate candidate (${similarity.toFixed(2)} Jaccard) with ${b.title}`;
+      results.push(
+        createIssue(
+          a,
+          "CNT-003",
+          "Content uniqueness",
+          "high",
+          "description",
+          evidence,
+          a.description,
+          2,
+          0.6,
+        ),
+      );
+      results.push(
+        createIssue(
+          b,
+          "CNT-003",
+          "Content uniqueness",
+          "high",
+          "description",
+          `Near-duplicate candidate (${similarity.toFixed(2)} Jaccard) with ${a.title}`,
+          b.description,
+          2,
+          0.6,
+        ),
+      );
+    }
+  }
   return results;
 }
 
-const CATEGORY_FIELDS: Record<string, string[]> = {
-  apparel: ["size", "color", "material"],
-  beauty: ["ingredients"],
-  home: ["material"],
-};
 export function validGtin(value: string): boolean {
-  if (!/^\d{8}$|^\d{12,14}$/.test(value)) return false;
+  if (!/^(?:\d{8}|\d{12,14})$/.test(value)) return false;
   const digits = [...value].map(Number);
-  const check = digits.pop()!;
+  const checkDigit = digits.pop();
   const sum = digits
     .reverse()
     .reduce((total, digit, index) => total + digit * (index % 2 === 0 ? 3 : 1), 0);
-  return (10 - (sum % 10)) % 10 === check;
-}
-
-function countMatches(value: string, pattern: string): number {
-  return (value.match(new RegExp(pattern, "gi")) ?? []).length;
-}
-
-export function exactDuplicateGroups(products: Product[]): Product[][] {
-  const groups = new Map<string, Product[]>();
-  for (const p of products) {
-    const key = contentHash(p.description);
-    const group = groups.get(key) ?? [];
-    group.push(p);
-    groups.set(key, group);
-  }
-  return [...groups.values()].filter((group) => group.length > 1);
+  return checkDigit === (10 - (sum % 10)) % 10;
 }

@@ -13,6 +13,7 @@ export type DemoProductRow = {
   seo_description: string;
   category: string;
   attributes: Record<string, string>;
+  metafields: Record<string, { type: string; value: string }>;
   price: number;
   sku: string;
   tags: string[];
@@ -37,6 +38,7 @@ export function toDemoProductRow(
     seo_description: product.seoDescription,
     category: product.productType,
     attributes: product.attributes,
+    metafields: product.metafields ?? {},
     price: product.price,
     sku: product.sku,
     tags: product.tags,
@@ -64,6 +66,7 @@ export function fromDemoProductRow(
     images,
     collections: [],
     attributes: row.attributes ?? {},
+    metafields: row.metafields ?? {},
     ...(row.gtin ? { gtin: row.gtin } : {}),
   };
 }

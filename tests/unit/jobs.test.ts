@@ -1,8 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { getBatchWindow } from "@/lib/jobs/batch";
 import { toDemoProductRow } from "@/lib/jobs/demo-products";
-import demoProducts from "@/data/demo-store.json";
-import type { Product } from "@/lib/audit/types";
+import { demoProducts } from "@/data/demo-products";
 
 describe("resumable job batch windows", () => {
   it("advances in bounded, non-overlapping ranges", () => {
@@ -29,7 +28,7 @@ describe("resumable job batch windows", () => {
 
 describe("Demo Store persistence mapping", () => {
   it("retains stable external IDs, normalized hashes, and all product fields", () => {
-    const product = (demoProducts as Product[])[0];
+    const product = demoProducts[0];
     const row = toDemoProductRow(product, "workspace-id", "store-id");
     expect(row.external_id).toBe(product.id);
     expect(row.content_hash).toMatch(/^[a-f0-9]{8}$/);

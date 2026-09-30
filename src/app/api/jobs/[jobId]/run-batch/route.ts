@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import demoProducts from "@/data/demo-store.json";
-import type { Product } from "@/lib/audit/types";
+import { demoProducts } from "@/data/demo-products";
 import { toDemoProductRow } from "@/lib/jobs/demo-products";
 import { getBatchWindow } from "@/lib/jobs/batch";
 import { getAuthenticatedWorkspace } from "@/lib/supabase/server";
@@ -62,7 +61,7 @@ export async function POST(_request: Request, context: { params: Promise<{ jobId
       })
       .parse(claimed.progress ?? {});
     const window = getBatchWindow(cursor.offset, demoProducts.length, batchSize);
-    const batch = (demoProducts as Product[]).slice(window.start, window.end);
+    const batch = demoProducts.slice(window.start, window.end);
     const progress = { ...priorProgress };
     const itemResults: {
       item_key: string;

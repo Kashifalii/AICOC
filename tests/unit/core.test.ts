@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import demoProducts from "@/data/demo-store.json";
+import { demoProducts } from "@/data/demo-products";
 import type { Product } from "@/lib/audit/types";
 import { auditProducts, validGtin } from "@/lib/audit/rules";
 import { jaccardSimilarity } from "@/lib/audit/duplicates";
@@ -12,7 +12,7 @@ import { sanitizeDescriptionHtml } from "@/lib/ai/sanitize";
 import { createHmac } from "node:crypto";
 import { validShopDomain, verifyShopifyHmac } from "@/lib/shopify/oauth";
 
-const products = demoProducts as Product[];
+const products = demoProducts;
 describe("Demo Store", () => {
   it("contains exactly 100 deterministic products and intentional rule coverage", () => {
     expect(products).toHaveLength(100);
@@ -150,7 +150,10 @@ describe("Shopify CSV mapping", () => {
 });
 describe("Product JSON-LD", () => {
   it("emits required offer information", () => {
-    expect(validateProductJsonLd(productJsonLd(products[0]))).toHaveLength(1);
+    expect(validateProductJsonLd(productJsonLd(products[0]))).toHaveLength(0);
+    expect(validateProductJsonLd(productJsonLd({ ...products[0], gtin: undefined }))).toHaveLength(
+      1,
+    );
     expect(validateProductJsonLd({})).toHaveLength(8);
   });
 });

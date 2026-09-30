@@ -1,21 +1,25 @@
+import { z } from "zod";
+
 export type Severity = "critical" | "high" | "medium" | "low";
-export type Product = {
-  id: string;
-  title: string;
-  description: string;
-  vendor: string;
-  productType: string;
-  handle: string;
-  seoTitle: string;
-  seoDescription: string;
-  price: number;
-  sku: string;
-  tags: string[];
-  images: { url: string; alt: string }[];
-  collections: string[];
-  attributes: Record<string, string>;
-  gtin?: string;
-};
+export const productSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  vendor: z.string(),
+  productType: z.string(),
+  handle: z.string(),
+  seoTitle: z.string(),
+  seoDescription: z.string(),
+  price: z.number(),
+  sku: z.string(),
+  tags: z.array(z.string()),
+  images: z.array(z.object({ url: z.string(), alt: z.string() })),
+  collections: z.array(z.string()),
+  attributes: z.record(z.string(), z.string()),
+  metafields: z.record(z.string(), z.object({ type: z.string(), value: z.string() })).optional(),
+  gtin: z.string().optional(),
+});
+export type Product = z.infer<typeof productSchema>;
 export type AuditIssue = {
   id: string;
   ruleId: string;

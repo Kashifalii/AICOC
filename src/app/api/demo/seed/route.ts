@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import demoProducts from "@/data/demo-store.json";
+import { demoProducts } from "@/data/demo-products";
 import { getAuthenticatedWorkspace } from "@/lib/supabase/server";
 import { fromDemoProductRow } from "@/lib/jobs/demo-products";
 
@@ -114,7 +114,7 @@ export async function GET() {
     const { data: rows, error: productsError } = await supabase
       .from("products")
       .select(
-        "id,external_id,handle,title,vendor,description_html,seo_title,seo_description,category,attributes,price,sku,tags,gtin",
+        "id,external_id,handle,title,vendor,description_html,seo_title,seo_description,category,attributes,metafields,price,sku,tags,gtin",
       )
       .eq("workspace_id", workspaceId)
       .eq("store_id", store.id)

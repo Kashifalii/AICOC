@@ -21,9 +21,11 @@
 ## Phase 2 — Audit Engine (partial)
 
 - Added pure TypeScript SEO, image, content, catalog data, category-attribute, JSON-LD and collection/link-candidate checks; exact/near duplicate detection; transparent score functions; dashboard findings/history views.
-- Status: rules are only partially aligned with Section 5.1; exact per-rule behavior/tests and safe link checking need completion. Audits still execute in the demo client; persisted audit batches remain open.
+- Implementation continuation: all 19 Section 5.1 rules now have explicit assertions, with controlled seed defect counts and a clean-product control. Rebuilt both seed copies to match the SRS profile; added HTML structure checks, category attributes, normalized SEO uniqueness, JSON-LD validation, orphan/inbound-link logic and impact calculation.
+- Added an SSRF-safe same-domain link checker with DNS pinning, public-address validation, bounded redirects, timeout and concurrency controls. It is tested, but not yet called from a persisted server audit job.
+- Status: deterministic rule coverage is implemented. DB-backed audit creation, rule-set version persistence, audit history, and live link-check integration into audit batches remain open.
 - Implementation continuation: added durable job lease/cursor/checkpoint infrastructure, currently wired to Demo Store import only. Resumable audit execution and persisted audit/issues remain open and are next in sequence.
-- Verification: core deterministic tests pass on the synthetic fixture; independent no-false-positive clean-product suite and AC-02 coverage remain open.
+- Verification: rule tests assert every ID, seeded defect counts, seed copy equality, and zero findings on a clean product. This covers deterministic AC-02 behavior; audit job integration remains open.
 - Commit: included in the consolidated implementation commit; phase remains partial.
 
 ## Continuation 1 — Database persistence and resumable jobs (partial)
@@ -32,6 +34,14 @@
 - Added authenticated Demo Store persistence and ten-product resumable import batches. Import updates are skipped when the normalized description content hash is unchanged.
 - Verification: `npm run format`, `npm run lint`, `npm run typecheck`, `npm run test` (15 tests), and `npm run build` pass. No local Postgres/Supabase runner is installed, so the migration and RLS functions still need execution/integration validation against Supabase.
 - Remaining: persist/execute audit, AI, Shopify import and publish jobs; per-item retry route; real CSV persistence; live DB integration tests.
+- Commit: committed as a separate continuation change.
+
+## Continuation 2 — Deterministic rule coverage (partial)
+
+- Reworked Section 5.1 rules and seed data; added dedicated deterministic rule tests and SSRF-safe link-checker unit tests.
+- Fixture assertions: 16 exact-duplicate products; 7 near-duplicate pairs / 14 candidate findings; 40 missing alts; 10 filename alts; 30 weak SEO titles; 35 missing/invalid meta descriptions; 10 invalid catalog metadata; 25 missing category attributes; 12 thin descriptions; 6 broken product-link targets; 8 orphan products.
+- Verification: `npm run format`, `npm run lint`, `npm run typecheck`, `npm run test` (30 tests), and `npm run build` pass. Link checks use injected dependencies in tests; live network and database audit integration still need environment validation.
+- Remaining: call the checker from audit jobs and persist audit issues/history. The rule implementations are complete; audit workflow requirements remain open and traced separately.
 - Commit: committed as a separate continuation change.
 
 ## Phase 3 — AI Copilot (partial)

@@ -22,18 +22,44 @@ export function validateProductJsonLd(json: Record<string, unknown>): JsonLdIssu
   const offers =
     json.offers && typeof json.offers === "object" ? (json.offers as Record<string, unknown>) : {};
   const issues: JsonLdIssue[] = [];
-  for (const field of ["name", "image"] as const)
-    if (!json[field] || (Array.isArray(json[field]) && !json[field].length))
-      issues.push({ field, severity: "critical", message: `Required field ${field} is missing` });
-  for (const field of ["price", "priceCurrency", "availability"])
-    if (!offers[field])
+  if (typeof json.name !== "string" || !json.name.trim())
+    issues.push({ field: "name", severity: "critical", message: "Required field name is missing" });
+  if (
+    !(typeof json.image === "string" && json.image.trim()) &&
+    !(
+      Array.isArray(json.image) &&
+      json.image.some((value) => typeof value === "string" && value.trim())
+    )
+  )
+    issues.push({
+      field: "image",
+      severity: "critical",
+      message: "Required field image is missing",
+    });
+  const brand =
+    json.brand && typeof json.brand === "object" ? (json.brand as Record<string, unknown>) : {};
+  if (typeof brand.name !== "string" || !brand.name.trim())
+    issues.push({ field: "brand", severity: "low", message: "Recommended field brand is missing" });
+  for (const field of ["price", "priceCurrency", "availability"] as const) {
+    if (
+      field === "price"
+        ? !Number.isFinite(Number(offers[field])) || Number(offers[field]) <= 0
+        : typeof offers[field] !== "string" || !offers[field].trim()
+    )
       issues.push({
         field: `offers.${field}`,
         severity: "critical",
         message: `Required offers field ${field} is missing`,
       });
-  for (const field of ["brand", "sku", "gtin"])
-    if (!json[field])
+  }
+  if (typeof offers.priceCurrency === "string" && !/^[A-Z]{3}$/.test(offers.priceCurrency))
+    issues.push({
+      field: "offers.priceCurrency",
+      severity: "critical",
+      message: "Currency must be an ISO 4217 code",
+    });
+  for (const field of ["sku", "gtin"])
+    if (typeof json[field] !== "string" || !json[field].trim())
       issues.push({ field, severity: "low", message: `Recommended field ${field} is missing` });
   return issues;
 }
