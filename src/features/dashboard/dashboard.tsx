@@ -69,6 +69,7 @@ export function Dashboard() {
   const [dark, setDark] = useState(false);
   const [approved, setApproved] = useState<string[]>([]);
   const [approvedValues, setApprovedValues] = useState<Record<string, string>>({});
+  const [suggestionIds, setSuggestionIds] = useState<Record<string, string>>({});
   const [exported, setExported] = useState(false);
   const filteredIssues = useMemo(
     () =>
@@ -193,13 +194,16 @@ export function Dashboard() {
       });
       const payload = (await response.json()) as {
         error?: { message: string };
+        suggestion?: { id: string; status: string };
         title?: string;
         meta_description?: string;
         description_html?: string;
       };
       if (response.ok) {
+        if (payload.suggestion?.id)
+          setSuggestionIds((current) => ({ ...current, [issue.id]: payload.suggestion!.id }));
         const value =
-          issue.field === "seoTitle"
+          issue.field === "title" || issue.field === "seoTitle"
             ? payload.title
             : issue.field === "seoDescription"
               ? payload.meta_description
@@ -223,7 +227,7 @@ export function Dashboard() {
     setSelected(issue);
     setDraftValue(approvedValues[issue.id] ?? issue.currentValue);
   };
-  const approveSelected = () => {
+  const approveSelected = async () => {
     if (!selected) return;
     if (
       !["seoTitle", "seoDescription", "description", "title", "images.alt"].includes(selected.field)
@@ -237,15 +241,84 @@ export function Dashboard() {
       setMessage("Edit the suggested value before approving this change.");
       return;
     }
+    if (
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+        selected.productId,
+      )
+    ) {
+      try {
+        let suggestionId = suggestionIds[selected.id];
+        if (!suggestionId) {
+          const createResponse = await fetch("/api/suggestions", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              productId: selected.productId,
+              field: selected.field,
+              currentValue: selected.currentValue,
+              suggestedValue: draftValue,
+            }),
+          });
+          const created = (await createResponse.json()) as {
+            suggestion?: { id: string };
+            error?: { message?: string };
+          };
+          if (!createResponse.ok || !created.suggestion)
+            throw new Error(created.error?.message ?? "Could not save this draft");
+          suggestionId = created.suggestion.id;
+          setSuggestionIds((current) => ({ ...current, [selected.id]: suggestionId! }));
+        }
+        const transition = async (status: "pending_review" | "approved") => {
+          const response = await fetch(`/api/suggestions/${suggestionId}/transition`, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ status }),
+          });
+          return { response, payload: (await response.json()) as { error?: { message?: string } } };
+        };
+        const submitted = await transition("pending_review");
+        if (!submitted.response.ok && submitted.response.status !== 409)
+          throw new Error(submitted.payload.error?.message ?? "Could not submit for review");
+        const approvedResult = await transition("approved");
+        if (!approvedResult.response.ok) {
+          setMessage(
+            approvedResult.response.status === 403
+              ? "Suggestion submitted for human review. A Reviewer or Owner must approve it."
+              : (approvedResult.payload.error?.message ?? "Could not approve this suggestion"),
+          );
+          return;
+        }
+      } catch (error) {
+        setMessage(error instanceof Error ? error.message : "Could not save the suggestion");
+        return;
+      }
+    }
     setApproved((current) => (current.includes(selected.id) ? current : [...current, selected.id]));
     setApprovedValues((current) => ({ ...current, [selected.id]: draftValue }));
     setMessage("Change approved for this demo session");
     setSelected(null);
   };
-  const simulatePublish = () => {
+  const simulatePublish = async () => {
     if (!approved.length) {
       setMessage("Approve a change before simulated publishing.");
       return;
+    }
+    const persistedIds = approved.map((issueId) => suggestionIds[issueId]);
+    if (persistedIds.every((id): id is string => Boolean(id))) {
+      setBusy(true);
+      try {
+        const response = await fetch("/api/publish/simulated", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ suggestionIds: persistedIds }),
+        });
+        const result = (await response.json()) as { error?: { message?: string } };
+        if (!response.ok) throw new Error(result.error?.message ?? "Simulated publish failed");
+      } catch (error) {
+        setMessage(error instanceof Error ? error.message : "Simulated publish failed");
+        setBusy(false);
+        return;
+      }
     }
     const before = score ?? scoreStore(products, auditProducts(products));
     const updated = products.map((product) =>
@@ -280,16 +353,44 @@ export function Dashboard() {
     ]);
     setApproved([]);
     setApprovedValues({});
+    setSuggestionIds({});
     setSelected(null);
     setMessage(
       `Demo changes applied · Content Health Score ${before} → ${after} (${after - before >= 0 ? "+" : ""}${after - before})`,
     );
+    setBusy(false);
   };
-  const exportApproved = () => {
+  const exportApproved = async () => {
     const approvedIssues = issues.filter((item) => approved.includes(item.id));
     if (!approvedIssues.length) {
       setMessage("Approve at least one suggestion before exporting.");
       return;
+    }
+    const persistedIds = approved.map((issueId) => suggestionIds[issueId]);
+    if (persistedIds.every((id): id is string => Boolean(id))) {
+      try {
+        const response = await fetch("/api/publish/export", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ suggestionIds: persistedIds }),
+        });
+        if (!response.ok) {
+          const result = (await response.json()) as { error?: { message?: string } };
+          throw new Error(result.error?.message ?? "Could not export approved changes");
+        }
+        const url = URL.createObjectURL(await response.blob());
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "approved-product-changes.csv";
+        link.click();
+        URL.revokeObjectURL(url);
+        setExported(true);
+        setMessage(`Exported ${approved.length} approved changes to CSV`);
+        return;
+      } catch (error) {
+        setMessage(error instanceof Error ? error.message : "Could not export approved changes");
+        return;
+      }
     }
     const rows = [
       ["Handle", "Title", "Description", "SEO Title", "SEO Description"],

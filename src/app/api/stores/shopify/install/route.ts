@@ -48,7 +48,7 @@ export async function GET(request: Request) {
   });
   const authorize = new URL(`https://${shop}/admin/oauth/authorize`);
   authorize.searchParams.set("client_id", env.SHOPIFY_API_KEY);
-  authorize.searchParams.set("scope", "read_products");
+  authorize.searchParams.set("scope", env.SHOPIFY_SCOPES);
   authorize.searchParams.set(
     "redirect_uri",
     `${env.NEXT_PUBLIC_APP_URL}/api/stores/shopify/callback`,

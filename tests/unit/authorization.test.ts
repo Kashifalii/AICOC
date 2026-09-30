@@ -65,5 +65,12 @@ describe("authentication and database access policies", () => {
     expect(sql).toContain("publish_items_require_approval");
     expect(sql).toContain("status='approved'");
     expect(sql).toContain("transition_suggestion");
+    const publishSql = readFileSync(
+      "supabase/migrations/202609300005_simulated_publish.sql",
+      "utf8",
+    );
+    expect(publishSql).toContain("item.status <> 'approved'");
+    expect(publishSql).toContain("insert into public.publish_items");
+    expect(publishSql).toContain("perform public.transition_suggestion(item.id,'published')");
   });
 });

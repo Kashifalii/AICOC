@@ -5,6 +5,7 @@ import { toDemoProductRow } from "@/lib/jobs/demo-products";
 import { getBatchWindow } from "@/lib/jobs/batch";
 import { getAuthenticatedWorkspace } from "@/lib/supabase/server";
 import { roleCan } from "@/lib/authz/roles";
+import { runShopifyImportBatch } from "@/lib/jobs/shopify-import-batch";
 
 const batchSize = 10;
 const paramsSchema = z.object({ jobId: z.string().uuid() });
@@ -33,7 +34,7 @@ export async function POST(_request: Request, context: { params: Promise<{ jobId
     if (jobReadError) return apiError("JOB_READ_FAILED", "Could not load the job", 500);
     if (!jobRow) return apiError("JOB_NOT_FOUND", "Job not found", 404);
     if (jobRow.status === "completed") return NextResponse.json({ job: jobRow });
-    if (jobRow.type !== "demo_seed")
+    if (jobRow.type !== "demo_seed" && jobRow.type !== "shopify_import")
       return apiError("UNSUPPORTED_JOB", "This job type is not available", 400);
     if (!jobRow.store_id) return apiError("JOB_INVALID", "The import job has no store", 409);
 
@@ -47,6 +48,13 @@ export async function POST(_request: Request, context: { params: Promise<{ jobId
       return apiError("JOB_CLAIM_FAILED", "Could not claim the next import batch", 409);
     const claimed = Array.isArray(claimData) ? claimData[0] : claimData;
     if (!claimed) return NextResponse.json({ job: jobRow, busy: true }, { status: 202 });
+
+    if (claimed.type === "shopify_import") {
+      const result = await runShopifyImportBatch(supabase, workspaceId, claimed, workerToken);
+      return NextResponse.json(result.body, { status: result.status });
+    }
+    if (claimed.type !== "demo_seed")
+      return apiError("UNSUPPORTED_JOB", "This job type is not available", 400);
 
     const cursor = z
       .object({ offset: z.number().int().nonnegative().default(0) })

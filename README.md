@@ -4,7 +4,7 @@ A Next.js workspace for auditing Shopify catalog content, finding high-impact is
 
 ## Current implementation status
 
-This repository contains the project foundation, deterministic audit rules, a 100-product fixture, a working dashboard/demo import, basic CSV mapping, review-state domain logic, a Gemini suggestion adapter, an initial Supabase schema and RLS policies, and CI. Some SRS requirements remain partial or deferred; see [`docs/REQUIREMENTS_TRACEABILITY.md`](docs/REQUIREMENTS_TRACEABILITY.md). In particular, Shopify GraphQL import/push, durable resumable jobs, durable tenant-scoped product persistence, complete private-route authorization, and production approval-to-publish handling need completion before this should be treated as a deployable SaaS.
+This repository contains the Next.js/Supabase foundation, deterministic audit rules and 100-product fixture, tenant-scoped Demo Store import, resumable demo and Shopify import batches, Gemini suggestion drafts, role-aware transitions, approval-gated export and publishing APIs, Shopify OAuth, and CI. SRS requirements still remain partial or deferred; see [`docs/REQUIREMENTS_TRACEABILITY.md`](docs/REQUIREMENTS_TRACEABILITY.md) before treating this as a production-ready SaaS.
 
 ## Prerequisites
 
@@ -38,7 +38,7 @@ Without `GEMINI_API_KEY`, deterministic audits still work and the AI route respo
 
 ## Shopify (optional)
 
-The authorization-code OAuth install/callback endpoints are implemented with an Owner check, single-use state cookie, timestamp and HMAC verification, minimal read-only product scope, token exchange and AES-256-GCM encrypted token storage. A Shopify app still needs a registered callback URL matching `/api/stores/shopify/callback`; a connection form is not yet in the UI. Paginated GraphQL import, product-update webhooks, write-scope re-consent and approved-change publishing remain open. The token-encryption helper is server-only.
+The authorization-code OAuth install/callback endpoints use an Owner check, a state cookie, timestamp and HMAC verification, the `write_products` scope, token exchange and AES-256-GCM token storage. Register `/api/stores/shopify/callback` in the Shopify app. Import jobs start with `POST /api/stores/{storeId}/import` and continue through `POST /api/jobs/{jobId}/run-batch`. Approved product title, description and SEO updates use Shopify Admin GraphQL `productUpdate`; use `POST /api/publish/shopify` with the store ID and approved suggestion IDs. Webhooks, publish retries/revert and a complete store connection/import UI remain open. Token decryption stays in server-only code.
 
 ## Deploy
 
@@ -49,7 +49,7 @@ The app is scaffolded for Vercel and CI runs on GitHub Actions. Before deploymen
 3. Apply the Supabase migration and verify auth/RLS before using real tenant data.
 4. Run `npm run lint`, `npm run typecheck`, `npm run test`, and `npm run build` locally and in CI.
 
-Vercel Hobby and Supabase free projects have execution, storage and idle-pause constraints. The serverless-safe job runner and database-backed demo flow remain open items.
+Vercel Hobby and Supabase free projects have execution, storage and idle-pause constraints. Apply the migrations before trying authenticated persistence. Database migrations and integrations still need a real Supabase project for end-to-end validation.
 
 ## Scripts
 
@@ -75,9 +75,9 @@ Vercel Hobby and Supabase free projects have execution, storage and idle-pause c
 
 ## Known limitations
 
-- Demo approval state and audit snapshots are browser-session state, not persisted server-side.
+- Deterministic audit results/history are still browser-session state; database-backed audit jobs and issue persistence remain open.
 - CSV import currently maps common Shopify export headings; a guided mapping UI and downloadable row-error report remain open.
 - The rule engine is a deterministic MVP implementation. External link checks require a safe same-domain HTTP checker, and several field/JSON-LD validations need deeper coverage.
 - AI output does not yet have a persistent response cache, queue/backoff, daily quota transaction or complete sanitizer/fact-lock coverage.
-- Supabase email/password and Google sign-in screens plus workspace bootstrap are implemented. Middleware for every private route, workspace-scoped demo persistence, server role enforcement across all routes, Shopify GraphQL import/push/revert and resumable job endpoints remain open.
+- Middleware, workspace-scoped demo persistence, role-scoped RLS declarations and route role checks are implemented. Cross-tenant RLS behavior still needs live Postgres verification. Shopify import and push are implemented behind APIs but still require a configured Shopify app; publishing is not yet resumable and revert is open.
 - No external credentials were available, so external provider behavior was not tested.

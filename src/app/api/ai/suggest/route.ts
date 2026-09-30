@@ -13,7 +13,7 @@ import { roleCan } from "@/lib/authz/roles";
 
 const inputSchema = z.object({
   productId: z.string().uuid(),
-  field: z.enum(["seoTitle", "seoDescription", "description"]),
+  field: z.enum(["title", "seoTitle", "seoDescription", "description"]),
   currentValue: z.string().max(10000),
   title: z.string().max(300),
   description: z.string().max(10000),
@@ -180,7 +180,7 @@ export async function POST(request: Request) {
       { status: 404 },
     );
   const suggestedValue =
-    parsed.data.field === "seoTitle"
+    parsed.data.field === "title" || parsed.data.field === "seoTitle"
       ? payload.title
       : parsed.data.field === "seoDescription"
         ? payload.meta_description

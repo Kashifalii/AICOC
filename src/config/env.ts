@@ -10,7 +10,7 @@ const schema = z.object({
   GEMINI_MODEL: z.string().default("gemini-2.5-flash"),
   SHOPIFY_API_KEY: z.string().optional(),
   SHOPIFY_API_SECRET: z.string().optional(),
-  SHOPIFY_SCOPES: z.string().default("read_products"),
+  SHOPIFY_SCOPES: z.string().default("write_products"),
   SHOPIFY_API_VERSION: z.string().default("2026-04"),
   ENCRYPTION_KEY: z.string().optional(),
   AI_MAX_CONCURRENCY: z.coerce.number().int().positive().default(2),
