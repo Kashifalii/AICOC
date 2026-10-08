@@ -52,7 +52,7 @@ export function fromDemoProductRow(
   images: Product["images"],
 ): Product {
   return {
-    id: row.external_id,
+    id: row.id,
     title: row.title,
     description: row.description_html,
     vendor: row.vendor,

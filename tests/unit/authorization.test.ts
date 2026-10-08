@@ -23,9 +23,11 @@ describe("workspace role capabilities", () => {
 });
 
 describe("authentication and database access policies", () => {
-  it("allows only the sign-in page and auth callback without a session", () => {
+  it("allows public demo and provider-status paths without a session", () => {
+    expect(isPublicPath("/")).toBe(true);
     expect(isPublicPath("/sign-in")).toBe(true);
     expect(isPublicPath("/auth/callback")).toBe(true);
+    expect(isPublicPath("/api/integrations/status")).toBe(true);
     expect(isPublicPath("/api/demo/seed")).toBe(false);
     expect(isPublicPath("/dashboard")).toBe(false);
   });

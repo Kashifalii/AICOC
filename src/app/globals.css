@@ -1364,6 +1364,18 @@ tbody tr:hover {
   border-top: 1px solid var(--border);
   padding-top: 14px;
 }
+.settings-row input,
+.settings-row select {
+  min-width: 0;
+  height: 32px;
+  flex: 1;
+  border: 1px solid var(--input);
+  border-radius: 6px;
+  background: var(--background);
+  color: var(--foreground);
+  padding: 0 9px;
+  font-size: 10px;
+}
 .settings-symbol {
   display: grid;
   place-items: center;

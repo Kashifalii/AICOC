@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getBatchWindow } from "@/lib/jobs/batch";
-import { toDemoProductRow } from "@/lib/jobs/demo-products";
+import { fromDemoProductRow, toDemoProductRow } from "@/lib/jobs/demo-products";
 import { demoProducts } from "@/data/demo-products";
 
 describe("resumable job batch windows", () => {
@@ -36,5 +36,8 @@ describe("Demo Store persistence mapping", () => {
     expect(row.seo_title).toBe(product.seoTitle);
     expect(row.vendor).toBe(product.vendor);
     expect(row.attributes).toEqual(product.attributes);
+    const restored = fromDemoProductRow({ ...row, id: "4d3c52c3-3b8a-4b61-9da2-e7a3bd249a8c" }, []);
+    expect(restored.id).toBe("4d3c52c3-3b8a-4b61-9da2-e7a3bd249a8c");
+    expect(restored.metafields).toEqual(product.metafields ?? {});
   });
 });

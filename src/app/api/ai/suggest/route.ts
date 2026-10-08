@@ -13,6 +13,7 @@ import { roleCan } from "@/lib/authz/roles";
 
 const inputSchema = z.object({
   productId: z.string().uuid(),
+  issueId: z.string().uuid().optional(),
   field: z.enum(["title", "seoTitle", "seoDescription", "description"]),
   currentValue: z.string().max(10000),
   title: z.string().max(300),
@@ -102,7 +103,17 @@ export async function POST(request: Request) {
       target_workspace: context.workspaceId,
       target_user: context.user.id,
     });
-    if (quotaError || !allowed)
+    if (quotaError)
+      return NextResponse.json(
+        {
+          error: {
+            code: "USAGE_CHECK_FAILED",
+            message: "Could not verify the workspace AI usage limit.",
+          },
+        },
+        { status: 503 },
+      );
+    if (!allowed)
       return NextResponse.json(
         {
           error: {
@@ -114,6 +125,7 @@ export async function POST(request: Request) {
       );
     const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
     let repair: string | undefined;
+    let providerFailed = false;
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
         const result = await withRateLimitBackoff(() =>
@@ -149,6 +161,7 @@ export async function POST(request: Request) {
           ? `Unsupported facts: ${locked.unsupported.join(", ")}`
           : decoded.error.message;
       } catch (error) {
+        providerFailed = true;
         repair = error instanceof Error ? error.message.slice(0, 300) : "Invalid response";
       }
     }
@@ -156,11 +169,13 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: {
-            code: "AI_VALIDATION_FAILED",
-            message: "The draft could not be validated. Please edit it manually.",
+            code: providerFailed ? "AI_PROVIDER_FAILED" : "AI_VALIDATION_FAILED",
+            message: providerFailed
+              ? "Gemini could not complete the request. Verify the API key, model, project quota, and network access."
+              : "The generated draft failed validation. Please edit it manually.",
           },
         },
-        { status: 422 },
+        { status: providerFailed ? 502 : 422 },
       );
   }
   const { data: product, error: productError } = await admin
@@ -179,6 +194,35 @@ export async function POST(request: Request) {
       },
       { status: 404 },
     );
+  if (parsed.data.issueId) {
+    const { data: issue, error: issueError } = await admin
+      .from("audit_issues")
+      .select("id")
+      .eq("id", parsed.data.issueId)
+      .eq("product_id", product.id)
+      .eq("workspace_id", context.workspaceId)
+      .maybeSingle();
+    if (issueError)
+      return NextResponse.json(
+        {
+          error: {
+            code: "ISSUE_READ_FAILED",
+            message: "Could not verify the selected audit finding.",
+          },
+        },
+        { status: 500 },
+      );
+    if (!issue)
+      return NextResponse.json(
+        {
+          error: {
+            code: "ISSUE_NOT_FOUND",
+            message: "The selected audit finding is unavailable.",
+          },
+        },
+        { status: 404 },
+      );
+  }
   const suggestedValue =
     parsed.data.field === "title" || parsed.data.field === "seoTitle"
       ? payload.title
@@ -189,6 +233,7 @@ export async function POST(request: Request) {
     .from("suggestions")
     .insert({
       workspace_id: context.workspaceId,
+      issue_id: parsed.data.issueId ?? null,
       product_id: product.id,
       field: parsed.data.field,
       current_value: parsed.data.currentValue,

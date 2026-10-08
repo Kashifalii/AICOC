@@ -21,24 +21,27 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open `http://localhost:3000`. Choose **Stores & import → Load Demo Store**, then **Run audit**. Visit `/sign-in` to create a Supabase account and enable authenticated AI suggestions. The synthetic catalog contains 100 products and injected examples for the rule catalog. The dashboard computes findings locally; the demo API returns the checked-in fixture.
+Open `http://localhost:3000`. The public demo is available without signing in. Sign in to save products and audits to your workspace, create durable suggestions, and connect providers. Choose **Stores & import → Load Demo Store**, then **Run audit**. The synthetic catalog contains 100 products and injected examples for the rule catalog.
 
 ## Supabase setup
 
 1. Create a Supabase project.
-2. Open the SQL Editor and run `supabase/migrations/202609300001_initial_schema.sql`.
-3. Set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and the server-only `SUPABASE_SERVICE_ROLE_KEY` in `.env.local`.
-4. The fixture is checked in at `supabase/seed/demo-store.json`; automated workspace/product seed persistence is not yet connected to the app.
+2. Open the SQL Editor and run every `supabase/migrations/*.sql` file in filename order. The app requires the persisted-jobs, role-scoped RLS, and simulated-publish migrations in addition to the initial schema.
+3. Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and the server-only `SUPABASE_SERVICE_ROLE_KEY`.
+4. Sign up through `/sign-in`. The database trigger creates the initial private Owner workspace.
+5. Sign in, choose **Stores & import → Load Demo Store**, then run an audit. Saved products, audits, and suggestions load again on later visits.
+
+Create a stable encryption key for Shopify tokens with `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` and save it as `ENCRYPTION_KEY` in `.env.local`. Keep the same value for the lifetime of connected stores and back it up securely; replacing it prevents decrypting previously stored tokens.
 
 ## Gemini (optional)
 
-Create an API key in Google AI Studio, set `GEMINI_API_KEY`, and choose `GEMINI_MODEL` in `.env.local`. The suggestion route uses the official `@google/genai` SDK with JSON-schema output, Zod validation, one validation repair attempt, prompt versioning, workspace database response cache, atomic monthly and daily quota reservations, numeric/material/size fact checks, HTML sanitization, and bounded rate-limit retries. Per-workspace concurrency queueing and complete fact extraction remain open. Product text is synthetic in the demo.
+Create an API key in Google AI Studio, set `GEMINI_API_KEY`, and choose `GEMINI_MODEL` in `.env.local`. The suggestion route uses the official `@google/genai` SDK with JSON-schema output, Zod validation, a validation repair attempt, prompt versioning, workspace-scoped database response cache, usage reservations, fact checks, HTML sanitization, and bounded rate-limit retries. Generated drafts are saved to the selected workspace and can be edited and approved through the review flow.
 
-Without `GEMINI_API_KEY`, deterministic audits still work and the AI route responds with an explicit not-configured error.
+Without `GEMINI_API_KEY`, deterministic audits still work and the UI reports that generated suggestions are unavailable.
 
 ## Shopify (optional)
 
-The authorization-code OAuth install/callback endpoints use an Owner check, a state cookie, timestamp and HMAC verification, the `write_products` scope, token exchange and AES-256-GCM token storage. Register `/api/stores/shopify/callback` in the Shopify app. Import jobs start with `POST /api/stores/{storeId}/import` and continue through `POST /api/jobs/{jobId}/run-batch`. Approved product title, description and SEO updates use Shopify Admin GraphQL `productUpdate`; use `POST /api/publish/shopify` with the store ID and approved suggestion IDs. Webhooks, publish retries/revert and a complete store connection/import UI remain open. Token decryption stays in server-only code.
+The authorization-code OAuth install/callback endpoints use an Owner check, a state cookie, timestamp and HMAC verification, `read_products` and `write_products` scopes, token exchange and AES-256-GCM token storage. Set `SHOPIFY_API_KEY`, `SHOPIFY_API_SECRET`, and a base64-encoded 32-byte `ENCRYPTION_KEY` in `.env.local`. Register `/api/stores/shopify/callback` as the redirect URL in Shopify and enable both scopes. Use **Stores & import → Connect Shopify** to authorize and import products; approved changes can be published from the review workflow. Publishing changes live Shopify product data, so review and explicitly publish only intended changes. Token decryption stays in server-only code.
 
 ## Deploy
 
@@ -75,9 +78,9 @@ Vercel Hobby and Supabase free projects have execution, storage and idle-pause c
 
 ## Known limitations
 
-- Deterministic audit results/history are still browser-session state; database-backed audit jobs and issue persistence remain open.
+- Deterministic audit computation runs in the application; saved product catalogs, audit snapshots/findings, and generated/manual suggestions are persisted in Supabase.
 - CSV import currently maps common Shopify export headings; a guided mapping UI and downloadable row-error report remain open.
 - The rule engine is a deterministic MVP implementation. External link checks require a safe same-domain HTTP checker, and several field/JSON-LD validations need deeper coverage.
-- AI output does not yet have a persistent response cache, queue/backoff, daily quota transaction or complete sanitizer/fact-lock coverage.
-- Middleware, workspace-scoped demo persistence, role-scoped RLS declarations and route role checks are implemented. Cross-tenant RLS behavior still needs live Postgres verification. Shopify import and push are implemented behind APIs but still require a configured Shopify app; publishing is not yet resumable and revert is open.
-- No external credentials were available, so external provider behavior was not tested.
+- Supabase migrations must be applied in order. The configured project was found to be missing the persisted-jobs migration; saved demo/Shopify batch imports require the current migration set.
+- Cross-tenant RLS behavior still needs live Postgres integration testing. Shopify publishing is not resumable and revert is not implemented.
+- Provider credentials, OAuth scope grants, and live third-party calls must be validated in the deployment environment. Keep service-role, Shopify secret, Gemini key, and encryption key server-side.

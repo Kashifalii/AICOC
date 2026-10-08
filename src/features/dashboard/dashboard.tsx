@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -51,7 +51,25 @@ import { Button } from "@/components/ui/button";
 import { SuggestionTable } from "@/features/review/suggestion-table";
 
 type ProductRecord = Product;
+type StoreRecord = {
+  id: string;
+  name: string;
+  type: "demo" | "shopify" | "csv";
+  domain: string | null;
+};
+type WorkspaceRole = "Owner" | "Editor" | "Reviewer" | "Viewer";
+type IntegrationStatus = {
+  supabaseConfigured: boolean;
+  persistedJobsSchemaReady: boolean;
+  geminiConfigured: boolean;
+  shopifyConfigured: boolean;
+  shopifyEncryptionConfigured: boolean;
+  shopifyScopes: string[];
+  shopifyWriteScopeConfigured: boolean;
+};
 const originalProducts = demoProducts;
+const isUuid = (value: string) =>
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 
 export function Dashboard() {
   const [products, setProducts] = useState<ProductRecord[]>(originalProducts);
@@ -71,6 +89,141 @@ export function Dashboard() {
   const [approvedValues, setApprovedValues] = useState<Record<string, string>>({});
   const [suggestionIds, setSuggestionIds] = useState<Record<string, string>>({});
   const [exported, setExported] = useState(false);
+  const [stores, setStores] = useState<StoreRecord[]>([]);
+  const [storeId, setStoreId] = useState("");
+  const [shopDomain, setShopDomain] = useState("");
+  const [authenticated, setAuthenticated] = useState(false);
+  const [workspaceRole, setWorkspaceRole] = useState<WorkspaceRole | null>(null);
+  const [integrations, setIntegrations] = useState<IntegrationStatus>({
+    supabaseConfigured: false,
+    persistedJobsSchemaReady: false,
+    geminiConfigured: false,
+    shopifyConfigured: false,
+    shopifyEncryptionConfigured: false,
+    shopifyScopes: [],
+    shopifyWriteScopeConfigured: false,
+  });
+  const activeStore = stores.find((store) => store.id === storeId);
+
+  useEffect(() => {
+    let cancelled = false;
+    const loadSavedWorkspace = async () => {
+      try {
+        const searchParams = new URLSearchParams(window.location.search);
+        if (searchParams.get("shopify") === "connected")
+          setMessage("Shopify connected. Select the store below and import its catalog.");
+        const statusResponse = await fetch("/api/integrations/status");
+        if (statusResponse.ok) {
+          const status = (await statusResponse.json()) as IntegrationStatus;
+          if (!cancelled) setIntegrations(status);
+        }
+        const storesResponse = await fetch("/api/stores");
+        if (storesResponse.status === 401) return;
+        const storePayload = (await storesResponse.json()) as {
+          stores?: StoreRecord[];
+          role?: WorkspaceRole;
+          error?: { message?: string };
+        };
+        if (!storesResponse.ok)
+          throw new Error(storePayload.error?.message ?? "Could not load saved workspace data.");
+        if (cancelled) return;
+        const savedStores = storePayload.stores ?? [];
+        setStores(savedStores);
+        setAuthenticated(true);
+        setWorkspaceRole(storePayload.role ?? null);
+        const selectedStore =
+          savedStores.find((store) => store.type === "shopify") ??
+          savedStores.find((store) => store.type === "demo") ??
+          savedStores[0];
+        if (!selectedStore) return;
+        setStoreId(selectedStore.id);
+        const [productsResponse, auditsResponse, suggestionsResponse] = await Promise.all([
+          fetch(`/api/stores/${selectedStore.id}/products`),
+          fetch(`/api/audits?storeId=${selectedStore.id}`),
+          fetch(`/api/suggestions?storeId=${selectedStore.id}`),
+        ]);
+        const productsPayload = (await productsResponse.json()) as {
+          products?: ProductRecord[];
+          error?: { message?: string };
+        };
+        if (productsResponse.ok && productsPayload.products) {
+          if (!cancelled) setProducts(productsPayload.products);
+        } else if (!productsResponse.ok && productsResponse.status !== 404) {
+          throw new Error(productsPayload.error?.message ?? "Could not restore saved products.");
+        }
+        const auditsPayload = (await auditsResponse.json()) as {
+          audits?: { id: string; created_at: string; score_after: number | null }[];
+          issues?: AuditIssue[];
+          score?: number;
+          error?: { message?: string };
+        };
+        if (auditsResponse.ok && auditsPayload.audits?.length) {
+          if (!cancelled) {
+            setIssues(auditsPayload.issues ?? []);
+            setHasAudit(true);
+            setScoreBefore(auditsPayload.score ?? null);
+            setAuditHistory(
+              [...auditsPayload.audits].reverse().map((audit) => ({
+                day: new Date(audit.created_at).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                }),
+                score: Number(audit.score_after ?? 0),
+              })),
+            );
+          }
+        } else if (!auditsResponse.ok) {
+          throw new Error(auditsPayload.error?.message ?? "Could not restore audit history.");
+        }
+        const suggestionsPayload = (await suggestionsResponse.json()) as {
+          suggestions?: {
+            id: string;
+            issue_id: string | null;
+            suggested_value: string;
+            status: string;
+          }[];
+          error?: { message?: string };
+        };
+        if (!suggestionsResponse.ok)
+          throw new Error(
+            suggestionsPayload.error?.message ?? "Could not restore saved suggestions.",
+          );
+        if (!cancelled) {
+          const currentIssueIds = new Set((auditsPayload.issues ?? []).map((issue) => issue.id));
+          const linkedSuggestions = (suggestionsPayload.suggestions ?? []).filter(
+            (suggestion) => suggestion.issue_id && currentIssueIds.has(suggestion.issue_id),
+          );
+          setSuggestionIds(
+            Object.fromEntries(
+              linkedSuggestions.map((suggestion) => [suggestion.issue_id!, suggestion.id]),
+            ),
+          );
+          setApproved(
+            linkedSuggestions
+              .filter((suggestion) => suggestion.status === "approved")
+              .map((suggestion) => suggestion.issue_id!),
+          );
+          setApprovedValues(
+            Object.fromEntries(
+              linkedSuggestions.map((suggestion) => [
+                suggestion.issue_id!,
+                suggestion.suggested_value,
+              ]),
+            ),
+          );
+        }
+      } catch (error) {
+        if (!cancelled)
+          setMessage(
+            error instanceof Error ? error.message : "Could not restore saved workspace data.",
+          );
+      }
+    };
+    void loadSavedWorkspace();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   const filteredIssues = useMemo(
     () =>
       issues.filter(
@@ -87,15 +240,51 @@ export function Dashboard() {
     name,
     total: issues.filter((item) => item.severity === name).length,
   }));
-  const runAudit = () => {
+  const runAudit = async () => {
     setBusy(true);
     setMessage("");
-    window.setTimeout(() => {
+    try {
       const found = auditProducts(products);
       const nextScore = scoreStore(products, found);
-      setIssues(found);
+      const previousScore = score ?? nextScore;
+      let persistedIssues = found;
+      let persistenceMessage = "";
+      if (storeId && products.every((product) => isUuid(product.id))) {
+        const response = await fetch("/api/audits", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            storeId,
+            score: nextScore,
+            issues: found.map((issue) => ({
+              id: issue.id,
+              productId: issue.productId,
+              ruleId: issue.ruleId,
+              category: issue.category,
+              severity: issue.severity,
+              field: issue.field,
+              evidence: issue.evidence,
+              impact: issue.impact,
+              currentValue: issue.currentValue,
+            })),
+          }),
+        });
+        const result = (await response.json()) as {
+          issueIds?: Record<string, string>;
+          error?: { message?: string };
+        };
+        if (response.ok && result.issueIds) {
+          persistedIssues = found.map((issue) => ({
+            ...issue,
+            id: result.issueIds![issue.id] ?? issue.id,
+          }));
+        } else {
+          persistenceMessage = ` Saved audit history was not updated: ${result.error?.message ?? "database request failed"}.`;
+        }
+      }
+      setIssues(persistedIssues);
       setHasAudit(true);
-      setScoreBefore(nextScore);
+      setScoreBefore(previousScore);
       setAuditHistory((current) => [
         ...current,
         {
@@ -103,12 +292,15 @@ export function Dashboard() {
           score: nextScore,
         },
       ]);
-      setBusy(false);
       setActive("Overview");
       setMessage(
-        `Audit complete · ${found.length} opportunities found across ${products.length} products`,
+        `Audit complete · ${found.length} opportunities found across ${products.length} products.${persistenceMessage}`,
       );
-    }, 180);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Audit could not be completed.");
+    } finally {
+      setBusy(false);
+    }
   };
   const startDemo = async () => {
     setBusy(true);
@@ -122,11 +314,15 @@ export function Dashboard() {
         body: JSON.stringify({ idempotencyKey: savedImportKey }),
       });
       const seedResult = (await response.json()) as {
+        storeId?: string;
         job?: { id: string; status: string; progress?: { completed?: number; failed?: number } };
         error?: { message?: string };
       };
       if (!response.ok || !seedResult.job)
         throw new Error(seedResult.error?.message ?? "Could not start saved Demo Store import");
+      if (!seedResult.storeId)
+        throw new Error("The saved Demo Store response did not include a store id.");
+      setStoreId(seedResult.storeId);
       let job = seedResult.job;
       let attempts = 0;
       while (job.status !== "completed" && attempts < 20) {
@@ -156,6 +352,15 @@ export function Dashboard() {
       if (!productsResponse.ok || !result.products)
         throw new Error(result.error?.message ?? "Could not read saved Demo Store products");
       setProducts(result.products);
+      setStores((current) => {
+        const demoStore = {
+          id: seedResult.storeId!,
+          name: "Northstar Goods",
+          type: "demo" as const,
+          domain: null,
+        };
+        return [...current.filter((store) => store.id !== demoStore.id), demoStore];
+      });
       setIssues([]);
       setHasAudit(false);
       setAuditHistory([]);
@@ -184,6 +389,7 @@ export function Dashboard() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           productId: product.id,
+          ...(isUuid(issue.id) ? { issueId: issue.id } : {}),
           field: issue.field,
           currentValue: issue.currentValue,
           title: product.title,
@@ -217,8 +423,8 @@ export function Dashboard() {
           ? `AI draft ready for ${product.title}`
           : (payload.error?.message ?? "AI suggestions are unavailable."),
       );
-    } catch {
-      setMessage("AI suggestions are not configured. Add GEMINI_API_KEY to enable them.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "AI suggestion request failed.");
     } finally {
       setBusy(false);
     }
@@ -241,11 +447,7 @@ export function Dashboard() {
       setMessage("Edit the suggested value before approving this change.");
       return;
     }
-    if (
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-        selected.productId,
-      )
-    ) {
+    if (isUuid(selected.productId)) {
       try {
         let suggestionId = suggestionIds[selected.id];
         if (!suggestionId) {
@@ -254,6 +456,7 @@ export function Dashboard() {
             headers: { "content-type": "application/json" },
             body: JSON.stringify({
               productId: selected.productId,
+              ...(isUuid(selected.id) ? { issueId: selected.id } : {}),
               field: selected.field,
               currentValue: selected.currentValue,
               suggestedValue: draftValue,
@@ -268,6 +471,14 @@ export function Dashboard() {
           suggestionId = created.suggestion.id;
           setSuggestionIds((current) => ({ ...current, [selected.id]: suggestionId! }));
         }
+        const savedDraft = await fetch(`/api/suggestions/${suggestionId}`, {
+          method: "PATCH",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ suggestedValue: draftValue }),
+        });
+        const savedDraftResult = (await savedDraft.json()) as { error?: { message?: string } };
+        if (!savedDraft.ok)
+          throw new Error(savedDraftResult.error?.message ?? "Could not save the edited draft");
         const transition = async (status: "pending_review" | "approved") => {
           const response = await fetch(`/api/suggestions/${suggestionId}/transition`, {
             method: "POST",
@@ -295,7 +506,11 @@ export function Dashboard() {
     }
     setApproved((current) => (current.includes(selected.id) ? current : [...current, selected.id]));
     setApprovedValues((current) => ({ ...current, [selected.id]: draftValue }));
-    setMessage("Change approved for this demo session");
+    setMessage(
+      storeId
+        ? "Change saved and approved in your workspace."
+        : "Change approved for this demo session.",
+    );
     setSelected(null);
   };
   const simulatePublish = async () => {
@@ -304,16 +519,24 @@ export function Dashboard() {
       return;
     }
     const persistedIds = approved.map((issueId) => suggestionIds[issueId]);
+    if (storeId && !persistedIds.every((id): id is string => Boolean(id))) {
+      setMessage(
+        "Some approved changes are not saved yet. Reopen and approve them before publishing.",
+      );
+      return;
+    }
     if (persistedIds.every((id): id is string => Boolean(id))) {
       setBusy(true);
       try {
-        const response = await fetch("/api/publish/simulated", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ suggestionIds: persistedIds }),
-        });
-        const result = (await response.json()) as { error?: { message?: string } };
-        if (!response.ok) throw new Error(result.error?.message ?? "Simulated publish failed");
+        for (let offset = 0; offset < persistedIds.length; offset += 10) {
+          const response = await fetch("/api/publish/simulated", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ suggestionIds: persistedIds.slice(offset, offset + 10) }),
+          });
+          const result = (await response.json()) as { error?: { message?: string } };
+          if (!response.ok) throw new Error(result.error?.message ?? "Simulated publish failed");
+        }
       } catch (error) {
         setMessage(error instanceof Error ? error.message : "Simulated publish failed");
         setBusy(false);
@@ -338,8 +561,45 @@ export function Dashboard() {
         return item;
       }, product),
     );
-    const nextIssues = auditProducts(updated);
+    let nextIssues = auditProducts(updated);
     const after = scoreStore(updated, nextIssues);
+    if (storeId && updated.every((product) => isUuid(product.id))) {
+      try {
+        const auditResponse = await fetch("/api/audits", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            storeId,
+            score: after,
+            issues: nextIssues.map((issue) => ({
+              id: issue.id,
+              productId: issue.productId,
+              ruleId: issue.ruleId,
+              category: issue.category,
+              severity: issue.severity,
+              field: issue.field,
+              evidence: issue.evidence,
+              currentValue: issue.currentValue,
+              impact: issue.impact,
+            })),
+          }),
+        });
+        const auditResult = (await auditResponse.json()) as {
+          issueIds?: Record<string, string>;
+          error?: { message?: string };
+        };
+        if (!auditResponse.ok || !auditResult.issueIds)
+          throw new Error(auditResult.error?.message ?? "Updated audit could not be saved.");
+        nextIssues = nextIssues.map((issue) => ({
+          ...issue,
+          id: auditResult.issueIds![issue.id] ?? issue.id,
+        }));
+      } catch (error) {
+        setMessage(
+          `Products were updated, but the follow-up audit was not saved: ${error instanceof Error ? error.message : "database request failed"}`,
+        );
+      }
+    }
     setProducts(updated);
     setIssues(nextIssues);
     setHasAudit(true);
@@ -356,9 +616,145 @@ export function Dashboard() {
     setSuggestionIds({});
     setSelected(null);
     setMessage(
-      `Demo changes applied · Content Health Score ${before} → ${after} (${after - before >= 0 ? "+" : ""}${after - before})`,
+      `${storeId ? "Saved changes applied" : "Demo changes applied"} · Content Health Score ${before} → ${after} (${after - before >= 0 ? "+" : ""}${after - before})`,
     );
     setBusy(false);
+  };
+  const connectShopify = () => {
+    const domain = shopDomain
+      .trim()
+      .toLowerCase()
+      .replace(/^https?:\/\//, "")
+      .replace(/\/$/, "");
+    if (!/^[a-z0-9][a-z0-9-]*\.myshopify\.com$/.test(domain)) {
+      setMessage("Enter your Shopify .myshopify.com domain, for example northstar.myshopify.com.");
+      return;
+    }
+    if (!authenticated) {
+      const next = `/api/stores/shopify/install?shop=${encodeURIComponent(domain)}`;
+      window.location.assign(`/sign-in?next=${encodeURIComponent(next)}`);
+      return;
+    }
+    if (workspaceRole !== "Owner") {
+      setMessage("Only a workspace Owner can connect Shopify.");
+      return;
+    }
+    if (!integrations.shopifyConfigured) {
+      setMessage("Add SHOPIFY_API_KEY and SHOPIFY_API_SECRET to .env.local to connect a store.");
+      return;
+    }
+    if (!integrations.shopifyEncryptionConfigured) {
+      setMessage("Add a valid base64-encoded 32-byte ENCRYPTION_KEY before connecting Shopify.");
+      return;
+    }
+    window.location.assign(`/api/stores/shopify/install?shop=${encodeURIComponent(domain)}`);
+  };
+  const importShopifyStore = async () => {
+    if (!activeStore || activeStore.type !== "shopify") return;
+    setBusy(true);
+    setMessage("Starting Shopify product import…");
+    try {
+      const response = await fetch(`/api/stores/${activeStore.id}/import`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ idempotencyKey: crypto.randomUUID() }),
+      });
+      const payload = (await response.json()) as {
+        job?: { id: string; status: string; progress?: { completed?: number; total?: number } };
+        error?: { message?: string };
+      };
+      if (!response.ok || !payload.job)
+        throw new Error(payload.error?.message ?? "Could not start Shopify import.");
+      let job = payload.job;
+      let batches = 0;
+      while (!["completed", "failed"].includes(job.status) && batches < 200) {
+        const batchResponse = await fetch(`/api/jobs/${job.id}/run-batch`, { method: "POST" });
+        const batchPayload = (await batchResponse.json()) as {
+          job?: typeof job;
+          busy?: boolean;
+          error?: { message?: string };
+        };
+        if (!batchResponse.ok && batchResponse.status !== 202)
+          throw new Error(batchPayload.error?.message ?? "Shopify import batch failed.");
+        if (batchPayload.job) job = batchPayload.job;
+        setMessage(
+          `Importing ${activeStore.name} · ${job.progress?.completed ?? 0} products saved`,
+        );
+        if (batchPayload.busy) await new Promise((resolve) => window.setTimeout(resolve, 800));
+        batches += 1;
+      }
+      if (job.status !== "completed")
+        throw new Error("Shopify import did not finish. Retry the import to resume the job.");
+      const productsResponse = await fetch(`/api/stores/${activeStore.id}/products`);
+      const productsPayload = (await productsResponse.json()) as {
+        products?: ProductRecord[];
+        error?: { message?: string };
+      };
+      if (!productsResponse.ok || !productsPayload.products)
+        throw new Error(
+          productsPayload.error?.message ?? "Could not load imported Shopify products.",
+        );
+      setProducts(productsPayload.products);
+      setIssues([]);
+      setHasAudit(false);
+      setApproved([]);
+      setApprovedValues({});
+      setSuggestionIds({});
+      setMessage(`Imported ${productsPayload.products.length} products from ${activeStore.name}.`);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Shopify import failed.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  const publishShopify = async () => {
+    if (!activeStore || activeStore.type !== "shopify" || approved.length === 0) {
+      setMessage("Connect a Shopify store and approve at least one saved suggestion first.");
+      return;
+    }
+    const ids = approved.map((issueId) => suggestionIds[issueId]);
+    if (!ids.every((id): id is string => Boolean(id))) {
+      setMessage("All selected changes must be saved as approved suggestions before publishing.");
+      return;
+    }
+    setBusy(true);
+    try {
+      for (let offset = 0; offset < ids.length; offset += 10) {
+        const response = await fetch("/api/publish/shopify", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            storeId: activeStore.id,
+            suggestionIds: ids.slice(offset, offset + 10),
+          }),
+        });
+        const result = (await response.json()) as { error?: { message?: string } };
+        if (!response.ok) throw new Error(result.error?.message ?? "Shopify publishing failed.");
+      }
+      const productsResponse = await fetch(`/api/stores/${activeStore.id}/products`);
+      const productsPayload = (await productsResponse.json()) as {
+        products?: ProductRecord[];
+        error?: { message?: string };
+      };
+      if (!productsResponse.ok || !productsPayload.products)
+        throw new Error(
+          productsPayload.error?.message ??
+            "Shopify was updated, but refreshed products could not be loaded.",
+        );
+      setProducts(productsPayload.products);
+      setApproved([]);
+      setApprovedValues({});
+      setSuggestionIds({});
+      setIssues([]);
+      setHasAudit(false);
+      setMessage(
+        "Approved changes were published to Shopify. Run an audit to verify the updated catalog.",
+      );
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Shopify publishing failed.");
+    } finally {
+      setBusy(false);
+    }
   };
   const exportApproved = async () => {
     const approvedIssues = issues.filter((item) => approved.includes(item.id));
@@ -464,8 +860,8 @@ export function Dashboard() {
           <div className="workspace-switcher">
             <div className="workspace-avatar">N</div>
             <div className="workspace-copy">
-              <strong>Northstar Goods</strong>
-              <span>Free workspace</span>
+              <strong>{activeStore?.name ?? "Demo workspace"}</strong>
+              <span>{authenticated ? "Supabase workspace" : "Public demo"}</span>
             </div>
             <ChevronDown size={15} className="text-muted-foreground" />
           </div>
@@ -491,8 +887,8 @@ export function Dashboard() {
           <div className="nav-label stores-label">CONNECTED STORE</div>
           <button className="store-link" onClick={() => setActive("Stores & import")}>
             <span className="store-dot" />
-            <span>Northstar Goods</span>
-            <span className="demo-pill">DEMO</span>
+            <span>{activeStore?.name ?? "Northstar Goods"}</span>
+            <span className="demo-pill">{activeStore?.type.toUpperCase() ?? "DEMO"}</span>
           </button>
           <div className="sidebar-bottom">
             <div className="usage-box">
@@ -531,15 +927,28 @@ export function Dashboard() {
         <main className="main-panel">
           <header className="topbar">
             <div className="breadcrumbs">
-              <span>Northstar Goods</span>
+              <span>{activeStore?.name ?? "Northstar Goods"}</span>
               <ChevronRight size={14} />
               <strong>{active}</strong>
             </div>
             <div className="topbar-actions">
               <span className="connection-status">
                 <span />
-                Store connected
+                {authenticated
+                  ? activeStore?.type === "shopify"
+                    ? "Shopify connected"
+                    : "Supabase connected"
+                  : "Public demo"}
               </span>
+              {!authenticated && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => window.location.assign("/sign-in")}
+                >
+                  Sign in
+                </Button>
+              )}
               <Button variant="outline" size="sm" onClick={() => setActive("Stores & import")}>
                 <Plus size={15} /> Import products
               </Button>
@@ -585,85 +994,313 @@ export function Dashboard() {
               </div>
             )}
             {active === "Stores & import" ? (
-              <section className="import-card">
-                <div className="import-icon">
-                  <Upload size={22} />
-                </div>
-                <div>
-                  <h2>Bring your catalog into Orbit</h2>
-                  <p>Start with the 100-product demo store or import a Shopify product CSV.</p>
-                </div>
-                <div className="import-actions">
-                  <Button onClick={startDemo} disabled={busy}>
-                    <Package size={16} /> Load Demo Store
-                  </Button>
-                  <label className="upload-button">
-                    <Upload size={15} /> Import CSV
-                    <input
-                      type="file"
-                      accept=".csv,text/csv"
-                      onChange={async (event) => {
-                        const file = event.target.files?.[0];
-                        if (!file) return;
-                        setBusy(true);
-                        try {
-                          const mapped = mapShopifyCsv(await file.text());
-                          const imported: ProductRecord[] = mapped.products.map((row, index) => ({
-                            id: `csv-${index + 1}`,
-                            title: row.title ?? "",
-                            description: row.description ?? "",
-                            vendor: row.vendor ?? "",
-                            productType: row.productType ?? "",
-                            handle: row.handle ?? `product-${index + 1}`,
-                            seoTitle: row.seoTitle ?? "",
-                            seoDescription: row.seoDescription ?? "",
-                            price: row.price ?? 0,
-                            sku: row.sku ?? "",
-                            tags: [],
-                            images: [],
-                            collections: [],
-                            attributes: {},
-                          }));
-                          if (mapped.errors.length) {
-                            const errorCsv = [
-                              "Row,Error",
-                              ...mapped.errors.map(
-                                (item) => `${item.row},"${item.message.replaceAll('"', '""')}"`,
-                              ),
-                            ].join("\r\n");
-                            const reportUrl = URL.createObjectURL(
-                              new Blob([errorCsv], { type: "text/csv" }),
+              <>
+                <section className="import-card">
+                  <div className="import-icon">
+                    <Upload size={22} />
+                  </div>
+                  <div>
+                    <h2>Bring your catalog into Orbit</h2>
+                    <p>Load the demo catalog, upload a Shopify CSV, or connect a Shopify store.</p>
+                  </div>
+                  <div className="import-actions">
+                    <Button
+                      onClick={startDemo}
+                      disabled={busy || (authenticated && !integrations.persistedJobsSchemaReady)}
+                    >
+                      <Package size={16} /> Load Demo Store
+                    </Button>
+                    <label className="upload-button">
+                      <Upload size={15} /> Import CSV
+                      <input
+                        type="file"
+                        accept=".csv,text/csv"
+                        disabled={busy || (authenticated && !integrations.persistedJobsSchemaReady)}
+                        onChange={async (event) => {
+                          const file = event.target.files?.[0];
+                          if (!file) return;
+                          setBusy(true);
+                          try {
+                            const csvText = await file.text();
+                            const mapped = mapShopifyCsv(csvText);
+                            const imported: ProductRecord[] = mapped.products.map((row, index) => ({
+                              id: `csv-${index + 1}`,
+                              title: row.title ?? "",
+                              description: row.description ?? "",
+                              vendor: row.vendor ?? "",
+                              productType: row.productType ?? "",
+                              handle: row.handle ?? `product-${index + 1}`,
+                              seoTitle: row.seoTitle ?? "",
+                              seoDescription: row.seoDescription ?? "",
+                              price: row.price ?? 0,
+                              sku: row.sku ?? "",
+                              tags: [],
+                              images: [],
+                              collections: [],
+                              attributes: {},
+                            }));
+                            let savedStore: StoreRecord | undefined;
+                            let importedProducts = imported;
+                            if (authenticated) {
+                              const saveResponse = await fetch("/api/stores/csv", {
+                                method: "POST",
+                                headers: { "content-type": "application/json" },
+                                body: JSON.stringify({ fileName: file.name, csv: csvText }),
+                              });
+                              const savePayload = (await saveResponse.json()) as {
+                                store?: StoreRecord;
+                                error?: { message?: string };
+                              };
+                              if (!saveResponse.ok || !savePayload.store)
+                                throw new Error(
+                                  savePayload.error?.message ?? "Could not save CSV products.",
+                                );
+                              savedStore = savePayload.store;
+                              const productResponse = await fetch(
+                                `/api/stores/${savedStore.id}/products`,
+                              );
+                              const productPayload = (await productResponse.json()) as {
+                                products?: ProductRecord[];
+                                error?: { message?: string };
+                              };
+                              if (!productResponse.ok || !productPayload.products)
+                                throw new Error(
+                                  productPayload.error?.message ??
+                                    "CSV was saved but products could not be reloaded.",
+                                );
+                              importedProducts = productPayload.products;
+                              setStoreId(savedStore.id);
+                              setStores((current) => [...current, savedStore!]);
+                            }
+                            if (mapped.errors.length) {
+                              const errorCsv = [
+                                "Row,Error",
+                                ...mapped.errors.map(
+                                  (item) => `${item.row},"${item.message.replaceAll('"', '""')}"`,
+                                ),
+                              ].join("\r\n");
+                              const reportUrl = URL.createObjectURL(
+                                new Blob([errorCsv], { type: "text/csv" }),
+                              );
+                              const report = document.createElement("a");
+                              report.href = reportUrl;
+                              report.download = "csv-import-errors.csv";
+                              report.click();
+                              URL.revokeObjectURL(reportUrl);
+                            }
+                            setStoreId("");
+                            setProducts(importedProducts);
+                            setIssues([]);
+                            setHasAudit(false);
+                            setAuditHistory([]);
+                            setScoreBefore(null);
+                            setApproved([]);
+                            setApprovedValues({});
+                            setSuggestionIds({});
+                            setMessage(
+                              `Imported ${importedProducts.length} products from ${file.name}${mapped.errors.length ? ` · ${mapped.errors.length} invalid rows exported` : ""}${savedStore ? " and saved to your workspace." : " for this browser session; sign in to save imports."}`,
                             );
-                            const report = document.createElement("a");
-                            report.href = reportUrl;
-                            report.download = "csv-import-errors.csv";
-                            report.click();
-                            URL.revokeObjectURL(reportUrl);
+                            setActive("Overview");
+                          } catch {
+                            setMessage(
+                              "Could not read the CSV file. Please use a Shopify product export.",
+                            );
+                          } finally {
+                            setBusy(false);
+                            event.target.value = "";
                           }
-                          setProducts(imported);
-                          setIssues([]);
-                          setHasAudit(false);
-                          setAuditHistory([]);
-                          setScoreBefore(null);
-                          setApproved([]);
-                          setApprovedValues({});
-                          setMessage(
-                            `Imported ${imported.length} products from ${file.name}${mapped.errors.length ? ` · ${mapped.errors.length} invalid rows exported` : ""}`,
-                          );
-                          setActive("Overview");
-                        } catch {
-                          setMessage(
-                            "Could not read the CSV file. Please use a Shopify product export.",
-                          );
-                        } finally {
-                          setBusy(false);
-                          event.target.value = "";
-                        }
-                      }}
+                        }}
+                      />
+                    </label>
+                  </div>
+                </section>
+                <section className="surface settings-panel">
+                  <div>
+                    <h2>Connected catalog</h2>
+                    <p>Select a saved store to restore its products and audit history.</p>
+                  </div>
+                  {stores.length ? (
+                    <div className="settings-row">
+                      <Store size={18} />
+                      <select
+                        aria-label="Select connected store"
+                        value={storeId}
+                        onChange={async (event) => {
+                          const nextStoreId = event.target.value;
+                          const nextStore = stores.find((store) => store.id === nextStoreId);
+                          if (!nextStore) return;
+                          setStoreId(nextStoreId);
+                          setBusy(true);
+                          try {
+                            const [productsResponse, auditsResponse, suggestionsResponse] =
+                              await Promise.all([
+                                fetch(`/api/stores/${nextStoreId}/products`),
+                                fetch(`/api/audits?storeId=${nextStoreId}`),
+                                fetch(`/api/suggestions?storeId=${nextStoreId}`),
+                              ]);
+                            const productData = (await productsResponse.json()) as {
+                              products?: ProductRecord[];
+                              error?: { message?: string };
+                            };
+                            if (!productsResponse.ok)
+                              throw new Error(
+                                productData.error?.message ?? "Could not load this store.",
+                              );
+                            const auditsData = (await auditsResponse.json()) as {
+                              audits?: { created_at: string; score_after: number | null }[];
+                              issues?: AuditIssue[];
+                              error?: { message?: string };
+                            };
+                            const suggestionsData = (await suggestionsResponse.json()) as {
+                              suggestions?: {
+                                id: string;
+                                issue_id: string | null;
+                                suggested_value: string;
+                                status: string;
+                              }[];
+                              error?: { message?: string };
+                            };
+                            if (!auditsResponse.ok)
+                              throw new Error(
+                                auditsData.error?.message ?? "Could not load audit history.",
+                              );
+                            if (!suggestionsResponse.ok)
+                              throw new Error(
+                                suggestionsData.error?.message ??
+                                  "Could not load saved suggestions.",
+                              );
+                            setProducts(productData.products ?? []);
+                            setIssues(auditsData.issues ?? []);
+                            setHasAudit(Boolean(auditsData.audits?.length));
+                            setScoreBefore(
+                              Number(auditsData.audits?.[0]?.score_after ?? 0) || null,
+                            );
+                            setAuditHistory(
+                              [...(auditsData.audits ?? [])].reverse().map((audit) => ({
+                                day: new Date(audit.created_at).toLocaleDateString("en-US", {
+                                  month: "short",
+                                  day: "numeric",
+                                }),
+                                score: Number(audit.score_after ?? 0),
+                              })),
+                            );
+                            const issueIds = new Set(
+                              (auditsData.issues ?? []).map((issue) => issue.id),
+                            );
+                            const linkedSuggestions = (suggestionsData.suggestions ?? []).filter(
+                              (suggestion) =>
+                                suggestion.issue_id && issueIds.has(suggestion.issue_id),
+                            );
+                            setSuggestionIds(
+                              Object.fromEntries(
+                                linkedSuggestions.map((suggestion) => [
+                                  suggestion.issue_id!,
+                                  suggestion.id,
+                                ]),
+                              ),
+                            );
+                            setApproved(
+                              linkedSuggestions
+                                .filter((suggestion) => suggestion.status === "approved")
+                                .map((suggestion) => suggestion.issue_id!),
+                            );
+                            setApprovedValues(
+                              Object.fromEntries(
+                                linkedSuggestions.map((suggestion) => [
+                                  suggestion.issue_id!,
+                                  suggestion.suggested_value,
+                                ]),
+                              ),
+                            );
+                            setMessage(`${nextStore.name} is selected.`);
+                          } catch (error) {
+                            setMessage(
+                              error instanceof Error ? error.message : "Could not load this store.",
+                            );
+                          } finally {
+                            setBusy(false);
+                          }
+                        }}
+                      >
+                        {stores.map((store) => (
+                          <option key={store.id} value={store.id}>
+                            {store.name} · {store.type}
+                          </option>
+                        ))}
+                      </select>
+                      {activeStore?.type === "shopify" && (
+                        <Button
+                          onClick={importShopifyStore}
+                          disabled={busy || !integrations.persistedJobsSchemaReady}
+                        >
+                          <ArrowDownToLine size={15} /> Import products
+                        </Button>
+                      )}
+                    </div>
+                  ) : (
+                    <p>
+                      {authenticated
+                        ? "No saved stores yet."
+                        : "Sign in to use saved Supabase data and connect Shopify."}
+                    </p>
+                  )}
+                  {integrations.supabaseConfigured && !integrations.persistedJobsSchemaReady && (
+                    <p>
+                      Supabase is reachable, but its persisted-job schema is not ready. Apply
+                      migrations 202609300002 through 202609300005 in order to enable saved store
+                      imports and publishing.
+                    </p>
+                  )}
+                </section>
+                <section className="surface settings-panel">
+                  <div>
+                    <h2>Connect Shopify</h2>
+                    <p>
+                      Authorize access to import your product catalog and publish approved edits.
+                    </p>
+                  </div>
+                  <div className="settings-row">
+                    <label className="auth-label" htmlFor="shop-domain">
+                      Store domain
+                    </label>
+                    <input
+                      id="shop-domain"
+                      type="text"
+                      autoComplete="url"
+                      placeholder="your-store.myshopify.com"
+                      value={shopDomain}
+                      onChange={(event) => setShopDomain(event.target.value)}
                     />
-                  </label>
-                </div>
-              </section>
+                    <Button
+                      onClick={connectShopify}
+                      disabled={
+                        !integrations.shopifyConfigured ||
+                        !integrations.shopifyEncryptionConfigured
+                      }
+                    >
+                      <Store size={15} /> Authorize Shopify
+                    </Button>
+                  </div>
+                  {(!integrations.shopifyConfigured ||
+                    !integrations.shopifyEncryptionConfigured) && (
+                    <p>
+                      {!integrations.shopifyConfigured
+                        ? "Shopify app credentials are missing."
+                        : !integrations.shopifyEncryptionConfigured
+                          ? "Token encryption key is missing or invalid."
+                          : "OAuth requests read_products and write_products; confirm both scopes are enabled in your Shopify app."}
+                    </p>
+                  )}
+                  {integrations.shopifyConfigured &&
+                    integrations.shopifyEncryptionConfigured &&
+                    !integrations.shopifyWriteScopeConfigured && (
+                      <p>
+                        OAuth will request write_products automatically. Confirm that Shopify has
+                        enabled the read_products and write_products scopes for this app.
+                      </p>
+                    )}
+                </section>
+              </>
             ) : null}
             {active !== "Stores & import" && (
               <>
@@ -1089,7 +1726,9 @@ export function Dashboard() {
                     <strong>Gemini AI</strong>
                     <span>AI explanations, copy drafts and attributes</span>
                   </div>
-                  <span className="not-configured">Not configured</span>
+                  <span className="not-configured">
+                    {integrations.geminiConfigured ? "Configured" : "GEMINI_API_KEY missing"}
+                  </span>
                 </div>
                 <div className="settings-row">
                   <div className="settings-symbol">
@@ -1099,18 +1738,15 @@ export function Dashboard() {
                     <strong>Shopify</strong>
                     <span>Import and publish directly to your store</span>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() =>
-                      setMessage(
-                        "Add Shopify app credentials in your .env file to enable the OAuth connection.",
-                      )
-                    }
-                  >
-                    Connect
+                  <Button variant="outline" size="sm" onClick={() => setActive("Stores & import")}>
+                    {activeStore?.type === "shopify" ? "Manage" : "Connect"}
                   </Button>
                 </div>
+                <p>
+                  Supabase {integrations.supabaseConfigured ? "configured" : "not configured"} ·
+                  Shopify app {integrations.shopifyConfigured ? "configured" : "missing"} · Token
+                  encryption {integrations.shopifyEncryptionConfigured ? "ready" : "missing"}
+                </p>
               </section>
             )}
             <footer className="page-footer">
@@ -1193,10 +1829,15 @@ export function Dashboard() {
               <div className="ai-notice">
                 <Bot size={16} />
                 <p>
-                  <strong>AI-generated drafts require configuration</strong>
+                  <strong>
+                    {integrations.geminiConfigured
+                      ? "Gemini suggestions are enabled"
+                      : "Gemini API key is not configured"}
+                  </strong>
                   <span>
-                    Use Generate suggestion with a workspace session and Gemini key. Without them,
-                    deterministic audits continue to work.
+                    {integrations.geminiConfigured
+                      ? "Generate a fact-checked draft for this product. The generated suggestion is saved in your workspace."
+                      : "Add GEMINI_API_KEY to .env.local to enable generated drafts. Deterministic audits remain available."}
                   </span>
                 </p>
               </div>
@@ -1237,6 +1878,17 @@ export function Dashboard() {
             <Button size="sm" onClick={simulatePublish}>
               <BadgeCheck size={14} /> Simulate publish
             </Button>
+            {activeStore?.type === "shopify" && (
+              <Button
+                size="sm"
+                onClick={publishShopify}
+                disabled={
+                  busy || !integrations.shopifyEncryptionConfigured || workspaceRole !== "Owner"
+                }
+              >
+                <Store size={14} /> Publish to Shopify
+              </Button>
+            )}
           </div>
         )}
       </div>

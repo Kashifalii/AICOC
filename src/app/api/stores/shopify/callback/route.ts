@@ -17,7 +17,6 @@ export async function GET(request: Request) {
   const timestamp = Number(params.get("timestamp"));
   const storeCookies = await cookies();
   const savedState = storeCookies.get("shopify_oauth_state")?.value;
-  const { user, workspaceId, role } = await getAuthenticatedWorkspace();
   const finish = (target: string, status: number) => {
     const response =
       status === 302
@@ -29,6 +28,13 @@ export async function GET(request: Request) {
     response.cookies.delete("shopify_oauth_state");
     return response;
   };
+  let auth: Awaited<ReturnType<typeof getAuthenticatedWorkspace>>;
+  try {
+    auth = await getAuthenticatedWorkspace();
+  } catch {
+    return finish("AUTH_UNAVAILABLE", 503);
+  }
+  const { user, workspaceId, role } = auth;
   if (!user || !workspaceId) return finish("UNAUTHENTICATED", 401);
   if (!roleCan(role, "store:connect")) return finish("FORBIDDEN", 403);
   if (!env.SHOPIFY_API_SECRET || !env.SHOPIFY_API_KEY || !validShopDomain(shop))
@@ -56,20 +62,30 @@ export async function GET(request: Request) {
     if (!tokenResponse.ok) return finish("SHOPIFY_TOKEN_EXCHANGE_FAILED", 502);
     const token = tokenSchema.safeParse(await tokenResponse.json());
     if (!token.success) return finish("INVALID_SHOPIFY_TOKEN_RESPONSE", 502);
+    const grantedScopes = new Set((token.data.scope ?? "").split(",").map((scope) => scope.trim()));
+    if (!grantedScopes.has("read_products") || !grantedScopes.has("write_products"))
+      return finish("SHOPIFY_SCOPES_MISSING", 403);
     const admin = createAdminClient();
-    const { error } = await admin.from("stores").upsert(
-      {
-        workspace_id: workspaceId,
-        name: shop.replace(".myshopify.com", ""),
-        type: "shopify",
-        domain: shop,
-        token_encrypted: encryptSecret(token.data.access_token),
-        api_version: env.SHOPIFY_API_VERSION,
-      },
-      { onConflict: "workspace_id,domain" },
-    );
+    const storeValues = {
+      workspace_id: workspaceId,
+      name: shop.replace(".myshopify.com", ""),
+      type: "shopify",
+      domain: shop,
+      token_encrypted: encryptSecret(token.data.access_token),
+      api_version: env.SHOPIFY_API_VERSION,
+    };
+    const { data: existingStore, error: lookupError } = await admin
+      .from("stores")
+      .select("id")
+      .eq("workspace_id", workspaceId)
+      .eq("domain", shop)
+      .maybeSingle();
+    if (lookupError) return finish("STORE_LOOKUP_FAILED", 500);
+    const { error } = existingStore
+      ? await admin.from("stores").update(storeValues).eq("id", existingStore.id)
+      : await admin.from("stores").insert(storeValues);
     if (error) return finish("STORE_SAVE_FAILED", 500);
-    const response = NextResponse.redirect(new URL("/", request.url));
+    const response = NextResponse.redirect(new URL("/?shopify=connected", request.url));
     response.cookies.delete("shopify_oauth_state");
     return response;
   } catch {

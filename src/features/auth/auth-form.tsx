@@ -36,7 +36,10 @@ export function AuthForm() {
       if (mode === "sign-up" && !result.data.session) {
         setMessage("Check your email to confirm your account, then sign in.");
       } else {
-        router.push("/");
+        const requestedNext = new URLSearchParams(window.location.search).get("next");
+        const next =
+          requestedNext?.startsWith("/") && !requestedNext.startsWith("//") ? requestedNext : "/";
+        router.push(next);
         router.refresh();
       }
     } catch (error) {
@@ -51,9 +54,14 @@ export function AuthForm() {
     setBusy(true);
     try {
       const supabase = createBrowserSupabaseClient();
+      const requestedNext = new URLSearchParams(window.location.search).get("next");
+      const next =
+        requestedNext?.startsWith("/") && !requestedNext.startsWith("//") ? requestedNext : "/";
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
-        options: { redirectTo: `${window.location.origin}/auth/callback` },
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+        },
       });
       if (error) throw error;
     } catch (error) {
