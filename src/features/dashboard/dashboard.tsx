@@ -1274,8 +1274,7 @@ export function Dashboard() {
                     <Button
                       onClick={connectShopify}
                       disabled={
-                        !integrations.shopifyConfigured ||
-                        !integrations.shopifyEncryptionConfigured
+                        !integrations.shopifyConfigured || !integrations.shopifyEncryptionConfigured
                       }
                     >
                       <Store size={15} /> Authorize Shopify
